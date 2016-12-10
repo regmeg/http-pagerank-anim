@@ -1,0 +1,33 @@
+"How does Facebook work 101"
+
+--------------------- 
+Lifecycle of a packet in wwww when search is done.
+
+DNS
+
+HTTP
+
+Server
+
+Google search algorithm
+
+Facebook Stack
+
+Sessions
+
+
+------ Proposed libraries and tech ---------------
+technology:
+*for animation:
+	-http://velocityjs.org/ - easy to integrate with bootstrap, a big plus.
+*for a state machine:
+	-http://machina-js.org/ - looks lighweight and easy enough to pick up.
+
+
+-- ToDo --
+*Make sure the same browser is used. 
+	-Chrome 55 and over is recomended, as it supports the most of EC6, so no need for babel:
+	http://kangax.github.io/compat-table/es6/#typescript
+*Read the papers on WWW and PageRank
+*Look up for animation and state libraries
+* Think of the code structure and modularity, EC6 has got good features for that, with imports and things. Initial proposal is to seperate state/animation/gui_components and not follow some kind of MVC pattern ?
