@@ -1,0 +1,47 @@
+{
+  "name": "velocity-react",
+  "version": "1.1.11",
+  "description": "React components to wrap Velocity animations",
+  "main": "index.js",
+  "scripts": {
+    "demo": "./node_modules/.bin/webpack-dev-server --progress --colors --content-base demo --hot --inline --config demo/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twitter-fabric/velocity-react.git"
+  },
+  "keywords": [
+    "velocity",
+    "react",
+    "animation"
+  ],
+  "author": "Twitter, Inc.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twitter-fabric/velocity-react/issues"
+  },
+  "homepage": "https://github.com/twitter-fabric/velocity-react#readme",
+  "dependencies": {
+    "lodash": "^3.10.1",
+    "react-addons-transition-group": "^0.14.0 || ^15.0.0",
+    "velocity-animate": "^1.3.1"
+  },
+  "peerDependencies": {
+    "react": "^0.14.0 || ^15.0.0",
+    "react-dom": "^0.14.0 || ^15.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.19.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-hot-loader": "^1.2.9",
+    "react-tween-state": "^0.1.3",
+    "style-loader": "^0.12.3",
+    "twemoji": "^1.4.1",
+    "underscore.string": "^3.2.0",
+    "webpack": "^1.12.0",
+    "webpack-dev-server": "^1.10.1"
+  }
+}
