@@ -6,13 +6,16 @@ cd into src/ and install the dependencies
 `npm install`
 then launch the application
 `npm run start`
+.
 
 This launches the webpack module bundler dev server, which is configured to transpile JSX and ES6, and bundle them together in the hot mode. Thereby dev can be done without refreshing browser and loosing states to see the updates. In order to see the live application, refer to the localhost:port address that webpack-dev-server provides.
 
 ##Some further reading
 Using Velocity with React.js
 [https://www.npmjs.com/package/velocity-react]
+
 Full Velocity.js documentation
 [http://velocityjs.org/]
+
 Velocity-react GitHub
 [https://github.com/twitter-fabric/velocity-react]
