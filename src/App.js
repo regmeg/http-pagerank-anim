@@ -6,6 +6,7 @@ import 'velocity-animate/velocity.ui';
 import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'velocity-react';
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import SelfFulfillingTextBox from './Components.js';
 import './App.css';
 
 //Set up sequances of animation
@@ -36,47 +37,6 @@ let Animations = {
   }),
 };
 
-class SelfFulfillingTextBox extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      labeltext: props.label,
-      fullText: props.text,
-      lettersToShow: 1,
-    }
-  }
-
-  tick() {
-    this.setState((prevState) => ({
-      lettersToShow: prevState.lettersToShow + 1,
-      currentText: prevState.fullText.substring(0, prevState.lettersToShow),
-    }));
-    if (this.state.lettersToShow > this.state.fullText.length) {
-      clearInterval(this.interval)
-    }
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => this.tick(), 150);
-  }
-
-  handleSubmit(event){
-
-  }
-
-
-  render(){
-    return(
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          {this.state.labeltext}
-          <input type="text" value={this.state.currentText} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    )
-  }
-}
 
 //Define the main App component
 class App extends Component {
