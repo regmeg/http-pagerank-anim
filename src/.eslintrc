@@ -1,0 +1,61 @@
+{
+  parser: "babel-eslint",
+  "extends": ["airbnb", "plugin:react/all"],
+  "parserOptions":
+    {  "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    //react code scturcture checks
+    "react/prop-types" : [2],
+    //js Elint code checks
+    "no-unused-expressions": [2, {"allowTernary": true }], // {"allowShortCircuit": true, "allowTernary": true }
+    //no need to enable those for this project
+    "react/no-set-state": [0], //this may only be required if only flux arch is used, so no local states are set
+    "react/require-optimization": [0],
+    "react/forbid-prop-types": [0],
+    //code structure, can be enabled to tidy up the code
+    "no-unused-vars" : [0],
+    "no-console" : [0],
+    "react/jsx-sort-props": [0],
+    //spacing and styling, might be enabled to tidy up the code
+    "space-before-function-paren": [0],
+    "block-spacing": [0],
+    "indent": [0],
+    "key-spacing": [0],
+    "space-in-parens": [0],
+    "spaced-comment" :[0],
+    "max-len": [0],
+    "react/jsx-max-props-per-line": [0],
+    "object-curly-spacing": [0],
+    "space-before-blocks": [0],
+    "keyword-spacing": [0],
+    "padded-blocks": [0],
+    "react/jsx-space-before-closing": [0],
+    "react/jsx-tag-spacing": [0],
+    "react/jsx-indent": [0],
+    "space-infix-ops": [0],
+    "react/jsx-curly-spacing": [0],
+    "comma-spacing": [0],
+    "no-trailing-spaces": [0],
+    "no-multiple-empty-lines": [0],
+    "func-call-spacing": [0],
+    "no-spaced-func": [0],
+    "array-bracket-spacing": [0],
+    "no-mixed-spaces-and-tabs": [0],
+    "no-tabs": [0],
+    "react/jsx-equals-spacing": [0],
+    //arguably a styling preference and got nothing to do with good practice, no need for them
+    "no-underscore-dangle": [0],
+    "no-multi-spaces": [0],
+    "react/jsx-handler-names": [0],
+    "jsx-a11y/no-static-element-interactions": [0],
+
+  },
+  "globals": {
+    "window": true,
+    "console": true,
+    "document": true,
+  },
+}

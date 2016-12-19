@@ -1,0 +1,28 @@
+.dot {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+
+  border-radius: 30px;
+  background-color: #4bc2f1;
+
+    left: 50%;
+    top: 300px;
+}
+
+.dot_container {
+  width: 0%;
+  height: 0%;
+  background-color: #008B8B;
+  perspective: 50px;
+  -webkit-perspective: 50px;
+  -moz-perspective: 50px;
+  -ms-perspective: 50px;
+
+  transform-origin: 50% 100%;
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+
+  opacity: 0.55;
+}
