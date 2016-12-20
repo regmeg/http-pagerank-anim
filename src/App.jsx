@@ -5,6 +5,7 @@ import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Animations from './components/Animations';
 import GoogleHome from './components/GoogleHome';
 import GoogleWebGraph from './components/GoogleWebGraph';
@@ -19,11 +20,9 @@ class App extends Component {
     super(props);
 
     this.state = {
-      firstlyRenderedInitialView: true,
       currentGloabalState: 0,
       currentView: null,
-      animation: null,
-      enterAnim: null,
+      tranistionName: 'background-flash',
     };
 
     //bind methods
@@ -32,11 +31,15 @@ class App extends Component {
   }
     //define something just before component mounts
   componentWillMount(){
-    }
+    this.setState({
+      currentView:<GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+    });
+  }
 
   //define something just after the component has rendered.
   componentDidMount() {
   }
+
 
 
   //Custom functions
@@ -44,28 +47,19 @@ class App extends Component {
 //Handle global state - function to jump between view componenets, which are independent of each other.
   _handleGlobalStateChange(direction){
     console.log('calling globalstate');
-      // if animation still in progress. just return
-      //if (getAnimationState() === false) return;
         //set the max state here
         const maxAppSate = 1;
         //save last state
         const currentState = this.state.currentGloabalState;
+        let nextState;
 
         //set the new state based on dirrection
         if      (direction === 'previous') {
-            (this.state.currentGloabalState <= 0)
-            ? this.setState({ currentGloabalState: 0})
-            : this.setState({ currentGloabalState: this.state.currentGloabalState - 1});
+            nextState = (currentState <= 0) ? 0 : currentState - 1;
         } else if (direction === 'next') {
-            (this.state.currentGloabalState >= maxAppSate)
-             ?
-             this.setState({ currentGloabalState: maxAppSate})
-             :
-             this.setState({ currentGloabalState: this.state.currentGloabalState + 1});
+            nextState = (currentState >= maxAppSate) ? maxAppSate : currentState + 1;
         }
 
-        const nextState = this.state.currentGloabalState;
-        this.setState({ firstlyRenderedInitialView: false});
 
           console.log(`next GlobalState is: ${nextState}, current GlobalState is: ${currentState}`);
 
@@ -73,44 +67,53 @@ class App extends Component {
           switch(nextState) {
 
                case 0:
-                   // if we come back from a bigger state, reverse that bigger state animation
+                   // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
-                     this.setState({ currentView: <GoogleHome moveGlobalState = {this._handleGlobalStateChange} />});
+                     this.setState({
+                       currentView: <GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+                     //tranistionName: "",
+                   });
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
                       console.error(`Cannot come from a smaller state to the 0 state. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
                    }
                    break;
-              case maxAppSate: //Fire the packet and move to the next view
-                      // if we come back from a bigger state, reverse that bigger state animation
+              case maxAppSate:
+                      //if we come from a bigger state, it is a bug, log an error.
                       if (currentState > nextState) {
                         console.error(`Cannot come from a bigger state to the maxAppState. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
+                      // if we come back from a smaller state, trigger the next view
                       } else if (nextState > currentState) {
                         this.setState({
-                          enterAnim: Animations.BackgroundFlash,
                           currentView:
-                        // <VelocityComponent animation={Animations.BackgroundFlash} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);} }>
-                        //   <GoogleWebGraph moveGlobalState = {this._handleGlobalStateChange} />
-                        // </VelocityComponent>});
-                          <GoogleWebGraph moveGlobalState = {this._handleGlobalStateChange} />,
+                           <GoogleWebGraph  key={'GoogleWebGraph'} moveGlobalState = {this._handleGlobalStateChange} />,
+                          //tranistionName: "",
                         });
-                        // move to the next view
-
                       }
                       break;
                default:
                    console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
      }
+
+     //update the state iteself
+     this.setState({ currentGloabalState: nextState});
 }
 
  //Render everying
   render() {
-    const ViewToRender = this.state.firstlyRenderedInitialView ? <GoogleHome moveGlobalState={this._handleGlobalStateChange}/> : this.state.currentView;
     return (
-      <div>
-        <VelocityTransitionGroup enter={this.state.enterAnim}>
-          {ViewToRender}
-        </VelocityTransitionGroup>
+        <div>
+          {/*define a React transition continaier for when component enters, leaves or just appears.*/}
+          <ReactCSSTransitionGroup
+            transitionName={this.state.tranistionName}
+            transitionAppear
+            transitionAppearTimeout={500}
+            transitionEnter
+            transitionEnterTimeout={500}
+            transitionLeave
+            transitionLeaveTimeout={500}>
+              {this.state.currentView}
+           </ReactCSSTransitionGroup>
       </div>
     );
   }

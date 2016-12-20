@@ -106,19 +106,6 @@ const Animations = {
       }],
     ],
   }),
-
-  GoogleSearchBarMove: velocityHelpers.registerEffect({
-    defaultDuration: 200,
-    calls: [
-      [{
-        translateX: 100,
-        rotateX: [60, 'spring'],
-      }, 1, {
-        easing: 'ease-in-out',
-      }],
-    ],
-  }),
-
   DotscontainerAnimation: velocityHelpers.registerEffect({
     defaultDuration: 6000,
     calls: [
@@ -134,15 +121,28 @@ const Animations = {
     ],
   }),
 
-  BackgroundFlash: velocityHelpers.registerEffect({
+  FlashServer : velocityHelpers.registerEffect({
     defaultDuration: 200,
     calls: [
       [{
-        width: '100%',
-        height: '100%',
-
+        translateX: 200,
+        translateY: -200,
+        height: '160%',
+        width: '160%',
+  			opacity: 0.1,
       }, 1, {
-        easing: 'easeInOutsine',
+        easing: 'ease-out',
+      }],
+    ],
+  }),
+
+  BackgroundFlash: velocityHelpers.registerEffect({
+    defaultDuration: 1000,
+    calls: [
+      [{
+        opacity: 0,
+      }, 1, {
+        easing: 'ease-out',
       }],
     ],
   }),

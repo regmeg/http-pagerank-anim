@@ -18,27 +18,27 @@ const chromeHeight = screenHeight - (document.documentElement.clientHeight || sc
 const translateZMin = -725;
 const translateZMax = 600;
 const _genRand = (min, max) => (Math.floor(Math.random() * ((max - min) + 1)) + min);
-const _genDotsScatterAnimIn = () => {
-      console.log('generating helper');
-      return velocityHelpers.registerEffect({
+const _genDotsScatterAnimIn = (id) => {
+      console.log(`generating helper id: ${id}`);
+      const helper = velocityHelpers.registerEffect({
       defaultDuration: 6000,
       calls: [
         [{
           translateX: [
-            function() { return _genRand(-screenWidth/2.5, screenWidth/2.5); },
-            function() { return _genRand(0, screenWidth); },
+            () => (_genRand(-screenWidth/2.5, screenWidth/2.5)),
+            () => (_genRand(0, screenWidth)),
           ],
           translateY: [
-            function() { return _genRand(-screenHeight/2.75, screenHeight/2.75);  },
-            function() { return _genRand(0, screenHeight); },
+            () => (_genRand(-screenHeight/2.75, screenHeight/2.75)),
+            () => (_genRand(0, screenHeight)),
           ],
           translateZ: [
-            function() { return _genRand(translateZMin, translateZMax);  },
-            function() { return _genRand(translateZMin, translateZMax); },
+            () => (_genRand(translateZMin, translateZMax)),
+            () => (_genRand(translateZMin, translateZMax)),
           ],
           opacity: [
-            function() { return Math.random(); },
-            function() { return Math.random() + 0.1; },
+            () => (Math.random()),
+            () => (Math.random() + 0.1),
           ],
         },1, {
           loop: 1,
@@ -46,6 +46,7 @@ const _genDotsScatterAnimIn = () => {
         }],
       ],
     });
+    return helper;
 };
 
 export default class AnimatedDot extends Component{
@@ -53,7 +54,7 @@ export default class AnimatedDot extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      animationHelper:  _genDotsScatterAnimIn(),
+      animationHelper:  _genDotsScatterAnimIn(this.props.id),
     };
   }
 
@@ -72,6 +73,7 @@ export default class AnimatedDot extends Component{
 
 AnimatedDot.propTypes = {
    animateDots: React.PropTypes.bool,
+   id: React.PropTypes.number.isRequired,
 };
 
 AnimatedDot.defaultProps = {

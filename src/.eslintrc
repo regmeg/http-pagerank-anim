@@ -46,6 +46,9 @@
     "no-mixed-spaces-and-tabs": [0],
     "no-tabs": [0],
     "react/jsx-equals-spacing": [0],
+    "react/jsx-closing-bracket-location": [0],
+    "arrow-spacing": [0],
+    "brace-style": [0],    
     //arguably a styling preference and got nothing to do with good practice, no need for them
     "no-underscore-dangle": [0],
     "no-multi-spaces": [0],

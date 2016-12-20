@@ -11,8 +11,8 @@
 }
 
 .dot_container {
-  width: 0%;
-  height: 0%;
+  width: 100%;
+  height: 100%;
   background-color: #008B8B;
   perspective: 50px;
   -webkit-perspective: 50px;
@@ -24,5 +24,35 @@
   -moz-transform-origin: 50% 100%;
   -ms-transform-origin: 50% 100%;
 
-  opacity: 0.55;
+  /*opacity: 0.55;*/
+}
+
+.flash_container {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes flash {
+    0% {
+        background-color: Red;
+    }
+    33% {
+        background-color: Blue;
+    }
+    66% {
+        background-color: Yellow;
+    }
+    100% {
+        background-color: Red;
+    }
+
+}
+
+.flash {
+  animation-name: flash;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }

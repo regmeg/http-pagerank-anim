@@ -93,7 +93,6 @@ div.Google-searchInput-launch-final{
   animation-name: flicker-in-move;
   animation-duration:200ms;
   animation-timing-function: ease-in;
-  animation-iteration-count: infinite;
   animation-direction: alternate;
 }
 
@@ -134,12 +133,7 @@ div.Google-searchInput-launch-final{
   80% {transform: rotate(1deg) translateX(20px) }
   83%   {transform: rotate(-1deg), translateX(30px) }
   85%  {transform: rotate(1deg)  translateX(40px) }
-  88%  {transform: rotate(-1deg) translateX(50px) }
-  90%  {transform: rotate(1deg) scaleY(1.04) translateX(60px) }
-  93%  {transform: rotate(-2deg) scaleY(0.92) translateX(70px)}
-  95% {transform: rotate(1deg) translateX(80px) }
-  98%   {transform: rotate(-1deg), translateX(90px) }
-  100%  {transform: rotate(1deg)  translateX(100px) }
+  100%  {transform: rotate(1deg) scaleY(1.04) translateX(50px) }
 }
 
 @keyframes flicker{

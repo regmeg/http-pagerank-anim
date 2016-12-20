@@ -18,7 +18,20 @@
   font-size: large;
 }
 
-/*@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}*/
+.background-flash-appear, .background-flash-enter {
+  opacity: 0.001;
+}
+
+.background-flash-appear.background-flash-appear-active,  .background-flash-enter.background-flash-enter-active{
+  opacity: 1;
+  transition: opacity .4s ease-in;
+}
+
+.background-flash-leave {
+  opacity: 1;
+}
+
+.background-flash-leave.background-flash-leave-active {
+  opacity: 0.001;
+  transition: opacity .4s ease-out;
+}

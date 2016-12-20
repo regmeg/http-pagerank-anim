@@ -4,10 +4,11 @@ Google Home page component
 import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'velocity-react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Animations from './Animations';
-import server from '../static/img/server_blue.jpg';
+import server from '../static/img/server_blue.png';
 import '../static/css/GoogleHome.css';
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
 
@@ -35,8 +36,8 @@ class GoogleHome extends Component {
     //set states
     this.state = initialState;
 
-    //bind custom methods to refer to this object. If they were defined as = () => {} arrow functions, this would have had been bound to the instance automatically by babel.
-    //Somme functions done really need to bound, as they will be called in the right scope due to the invocation patern within the object, but in case they will be used, they were bound as well.
+    //bind custom methods to refer to this object. If they were defined as = () => {} arrow functions, this would have had been bound to the instance automatically by Babel.
+    //Somme functions dont really need to bound, as they will be called in the right scope due to the invocation patern within the object, but just in case they will be used different, they were bound as well.
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
 
     this._changeParentClassToFocus = this._changeParentClassToFocus.bind(this);
@@ -52,6 +53,7 @@ class GoogleHome extends Component {
     this._spwanServer          = this._spwanServer.bind(this);
     this._spwanServerReverse   = this._spwanServerReverse.bind(this);
     this._firePacket           = this._firePacket.bind(this);
+    this._flashServer          = this._flashServer.bind(this);
   }
 
 
@@ -77,27 +79,20 @@ class GoogleHome extends Component {
 //function for handling keyevents and state of the presentation - a state machine
     _handleKeyDownandSetState (event){
         // if animation still in progress. just return
-        if (getAnimationState() === false) return;
+        if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
           //set the max state here
           const maxAppSate = 3;
           //save last state
           const currentState = this.state.currentAppState;
-
+          let nextState;
           //set the new state
           //37 is if back arrow is pressed. 39 if foward key. Add or remove state corespondingly
           if      (event.keyCode === 37) {
-              (this.state.currentAppState <= 0)
-              ? this.setState({ currentAppState: 0})
-              : this.setState({ currentAppState: this.state.currentAppState - 1});
+              nextState = (currentState <= 0) ? 0 : currentState - 1;
           } else if (event.keyCode === 39) {
-              (this.state.currentAppState >= maxAppSate)
-               ?
-               this.setState({ currentAppState: maxAppSate})
-               :
-               this.setState({ currentAppState: this.state.currentAppState + 1});
+              nextState = (currentState >= maxAppSate) ? maxAppSate : currentState + 1;
           }
 
-          const nextState = this.state.currentAppState;
 
             console.log(`next AppState is: ${nextState}, current Appstate is: ${currentState}`);
 
@@ -130,7 +125,7 @@ class GoogleHome extends Component {
                  case 2: // "Server spawned"
                        // if we come back from a bigger state, reverse that bigger state animation
                        if (currentState > nextState) {
-                        // this._spwanServer_reverse();
+                         this._spwanServer_reverse();
                          //if we come from a smaller state, apply the animation of this state
                        } else if (nextState > currentState) {
                          this._spwanServer();
@@ -144,14 +139,15 @@ class GoogleHome extends Component {
                         } else if (nextState > currentState) {
                           //fire packaet
                           this._firePacket();
-
-                          // move to the next view
-                          setTimeout(() => {     this.props.moveGlobalState('next');    }, 220);
+                          setTimeout(() => {     this.props.moveGlobalState('next');    }, 100);
                         }
                         break;
                  default:
                      console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
        }
+
+       //set the state enevtually
+        this.setState({ currentAppState: nextState});
   }
 
 /***************************************************************************************
@@ -233,13 +229,17 @@ class GoogleHome extends Component {
     }
 
     _firePacket() {
-      this.setState({
-        GoogleSearchBarTransform: Animations.GoogleSearchBarMove,
-      });
+      console.log('firing packet');
       const _this = this;
       this._changeParentClassToMoveFurther();
-      this._changeServerLogoClassToStill ();
-      setTimeout(() => {     _this._changeParentClassToFlcikerFurther();    }, 200);
+      this._changeServerLogoClassToStill();
+      //setTimeout(() => {     _this._changeParentClassToFlcikerFurther();    }, 200);
+    }
+
+    _flashServer() {
+      this.setState({
+        ServerImgEnterAnim: Animations.FlashServer,
+      });
     }
 
 /***************************************************************************************
@@ -293,7 +293,7 @@ class GoogleHome extends Component {
         {/*f card set to display, display it, if not, return null.*/}
         {this.state.RenderServerLogo
             ?(
-              <VelocityComponent animation={this.state.ServerImgEnterAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);} }>
+              <VelocityComponent animation={this.state.ServerImgEnterAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}} >
                 <img src={server} className={this.state.serverLogo_class} alt="logo" />
               </VelocityComponent>
              )
