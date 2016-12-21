@@ -15,6 +15,7 @@
     "react/no-set-state": [0], //this may only be required if only flux arch is used, so no local states are set
     "react/require-optimization": [0],
     "react/forbid-prop-types": [0],
+    "no-restricted-properties" :[0],
     //code structure, can be enabled to tidy up the code
     "no-unused-vars" : [0],
     "no-console" : [0],
@@ -48,12 +49,14 @@
     "react/jsx-equals-spacing": [0],
     "react/jsx-closing-bracket-location": [0],
     "arrow-spacing": [0],
-    "brace-style": [0],    
+    "brace-style": [0],
     //arguably a styling preference and got nothing to do with good practice, no need for them
     "no-underscore-dangle": [0],
     "no-multi-spaces": [0],
     "react/jsx-handler-names": [0],
     "jsx-a11y/no-static-element-interactions": [0],
+    "react/sort-prop-types": [0],
+
 
   },
   "globals": {

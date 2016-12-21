@@ -110,12 +110,10 @@ const Animations = {
     defaultDuration: 6000,
     calls: [
       [{
-        perspective: [ 215, 50 ],
-  			opacity: [ 0.90, 0.55 ],
-        rotateZ: [ 5, 0 ],
+        perspective: [ 600, 50 ],
+  			opacity: [ 0.90, 0.75 ],
       }, 1, {
-        loop: 1,
-        delay: 3250,
+        delay: 5250,
         easing: 'easeInOutsine',
       }],
     ],
@@ -141,6 +139,19 @@ const Animations = {
     calls: [
       [{
         opacity: 0,
+      }, 1, {
+        easing: 'ease-out',
+      }],
+    ],
+  }),
+
+  SearchResEnter: velocityHelpers.registerEffect({
+    defaultDuration: 400,
+    calls: [
+      [{
+        translateY: 100,
+        // width: [0, 100],
+        // height: [0, 100],
       }, 1, {
         easing: 'ease-out',
       }],

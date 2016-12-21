@@ -5,9 +5,6 @@
 
   border-radius: 30px;
   background-color: #4bc2f1;
-
-    left: 50%;
-    top: 300px;
 }
 
 .dot_container {
@@ -34,6 +31,15 @@
   height: 100%;
 }
 
+.searcRes{
+  background-color: gray;
+  top: -100;
+  position: absolute;
+}
+
+/*~~~~~~~~~
+Animations
+~~~~~~~~~*/
 @keyframes flash {
     0% {
         background-color: Red;
@@ -55,4 +61,14 @@
   animation-duration: 1000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.line-flash-appear, .line-flash-enter {
+  opacity: 0.001;
+}
+
+.line-flash-appear.line-flash-appear-active,  .line-flash-enter.line-flash-enter-active{
+  opacity: 0.8;
+  transition: opacity color .5s ease-out;
+
 }

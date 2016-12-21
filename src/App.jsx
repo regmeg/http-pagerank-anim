@@ -23,16 +23,18 @@ class App extends Component {
       currentGloabalState: 0,
       currentView: null,
       tranistionName: 'background-flash',
+      searchTerm: null,
     };
 
     //bind methods
     this._handleGlobalStateChange = this._handleGlobalStateChange.bind(this);
+    this._saveSearch = this._saveSearch.bind(this);
 
   }
     //define something just before component mounts
   componentWillMount(){
     this.setState({
-      currentView:<GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+      currentView:<GoogleHome key={'GoogleHome'} saveSearch={this._saveSearch} moveGlobalState = {this._handleGlobalStateChange} />,
     });
   }
 
@@ -70,7 +72,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+                       currentView: <GoogleHome key={'GoogleHome'}  saveSearch={this._saveSearch} moveGlobalState = {this._handleGlobalStateChange} />,
                      //tranistionName: "",
                    });
                      //if we come from a smaller state, it is a bug, log an error.
@@ -86,7 +88,7 @@ class App extends Component {
                       } else if (nextState > currentState) {
                         this.setState({
                           currentView:
-                           <GoogleWebGraph  key={'GoogleWebGraph'} moveGlobalState = {this._handleGlobalStateChange} />,
+                           <GoogleWebGraph  key={'GoogleWebGraph'} searchTerm={this.state.searchTerm} moveGlobalState = {this._handleGlobalStateChange} />,
                           //tranistionName: "",
                         });
                       }
@@ -97,6 +99,11 @@ class App extends Component {
 
      //update the state iteself
      this.setState({ currentGloabalState: nextState});
+}
+
+_saveSearch(term){
+  //console.log(`saveing term ${term}`);
+  this.setState({ searchTerm: term});
 }
 
  //Render everying

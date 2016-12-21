@@ -28,7 +28,7 @@ const initialState = {
 
 
 //Define the main App component
-class GoogleHome extends Component {
+export default class GoogleHome extends Component {
 
 //define the constuctor of the isntance. In fact, there is no a need for a constructor, if arrow functions and local class properties are defined on their own, babel will transpile those exactlt the same way and bind them automatically. But that approach is still considered somewhat experimental.
   constructor(props) {
@@ -39,6 +39,7 @@ class GoogleHome extends Component {
     //bind custom methods to refer to this object. If they were defined as = () => {} arrow functions, this would have had been bound to the instance automatically by Babel.
     //Somme functions dont really need to bound, as they will be called in the right scope due to the invocation patern within the object, but just in case they will be used different, they were bound as well.
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
+    this._handleChange = this._handleChange.bind(this);
 
     this._changeParentClassToFocus = this._changeParentClassToFocus.bind(this);
     this._changeParentClassToBlur  = this._changeParentClassToBlur.bind(this);
@@ -198,6 +199,8 @@ class GoogleHome extends Component {
       //set timeout for drawing the flame
       const _this = this;
       setTimeout(() => {_this._changeParentClassToFire();}, 400);
+      //pus the term to parent
+      this.props.saveSearch(this.state.inputValue);
     }
 
     _triggerSearchReverse () {
@@ -247,6 +250,7 @@ class GoogleHome extends Component {
 ****************************************************************************************/
 //function capturing what is put into the search bar
     _handleChange (event) {
+      //console.log(`event.target.value} is ${event.target.value}}`);
       this.setState({ inputValue: event.target.value});
     }
 
@@ -270,7 +274,7 @@ class GoogleHome extends Component {
 
             <VelocityComponent animation={this.state.HideElemAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);} }>
 
-              <input type="text" className="Google-searchInput" onFocus={this._changeParentClassToFocus} onBlur={this._changeParentClassToBlur} onChange={this._handleChang}/>
+              <input type="text" className="Google-searchInput" onFocus={this._changeParentClassToFocus} onBlur={this._changeParentClassToBlur} onChange={this._handleChange}/>
 
             </VelocityComponent>
 
@@ -306,10 +310,10 @@ class GoogleHome extends Component {
 //define propTypes
 GoogleHome.propTypes = {
   moveGlobalState: React.PropTypes.func,
+  saveSearch: React.PropTypes.func,
 };
 
 GoogleHome.defaultProps = {
   moveGlobalState: null,
+  saveSearch: null,
 };
-
-export default GoogleHome;
