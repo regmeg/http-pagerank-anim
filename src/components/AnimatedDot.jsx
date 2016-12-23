@@ -5,6 +5,7 @@ import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'velocity-react';
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import '../static/css/GoogleWebGraph.css';
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
 import Animations from './Animations';
@@ -113,13 +114,183 @@ export default class AnimatedDot extends Component{
     this.state = {
       animationHelper:  _genDotsScatterAnimIn(this.props.id),
     };
+    this.getMyFraction = this.getMyFraction.bind(this);
+    this.getMyFractionAnim = this.getMyFractionAnim.bind(this);
+
   }
 
+  getMyFractionLink (id) {
+    this.state = this.state;
+    const fractionsInit = [
+    'superprofs.com/ca/ultimate-tips-pass-ca-cwa-cs-exams/',
+    'www.thecsclubindia.com/how-i-passed-cs-executive-in-first-attempt/',
+    'www.medical-institution.com/how-to-prepare-and-pass-usmle-step-2-cs/',
+    'www.cakart.in/blog/easy-way-to-pass-cs-in-first-attempt/',
+    'indiatoday.intoday.in/education/story/cs-tips-and-tricks/1/502394.html',
+    'www.quora.com/How-do-you-study-for-company-secretary-executive-exam-within-three-months'];
+    const fractions = [
+    'superprofs..',
+    'thecsclubi..',
+    'medical-..',
+    'cakart.in/..',
+    'indiatoday/..',
+    'quora.com/..'];
+    return fractions[id];
+  }
+
+  getMyFraction (id) {
+    this.state = this.state;
+    const fractions = [0.011, 0.009, 0.002, 0.242, 0.034, 0.512];
+    return fractions[id];
+  }
+
+  getMyFractionAnim (id, reverse) {
+  this.state = this.state;
+  let ycord;
+  let xcord;
+  let delay;
+  let fontS;
+  const wid = '190%';
+  switch(id) {
+     case 0://#4 011
+        ycord = -115;
+        xcord = -183;
+        delay = 3;
+        fontS = '22px';
+      break;
+      case 1://#5 009
+         ycord = -105;
+         xcord = -223;
+         delay = 4;
+         fontS = '18px';
+       break;
+       case 2://#6 002
+          ycord = 142;
+          xcord = -624;
+          delay = 5;
+          fontS = '23px';
+                break;
+        case 3://2# 242
+           ycord = -32;
+           xcord = -367;
+           delay = 1;
+           fontS = '15.5px';
+               break;
+         case 4://#3 034
+            ycord = 24;
+            xcord = -457;
+            delay = 2;
+            fontS = '23px';
+                break;
+          case 5:// #1 512
+             ycord = 42;
+             xcord = -320;
+             delay = 0;
+             fontS = '14.6px';
+                break;
+           default:  console.error(`Unknown ${id} attempted to be generated in Fraciton`);
+  }
+  if (reverse) {xcord = 0; ycord=0;}
+  const _genFractionMove = idIn => ( velocityHelpers.registerEffect({
+    defaultDuration: 700,
+    calls: [
+      [{
+       translateX: xcord,
+       translateY: ycord,
+       fontSize: fontS,
+       color:'#5591F5',
+       width: wid,
+      }, 1, {
+        easing: 'ease-out',
+        //delay: delay*450,
+      }],
+    ],
+  }) );
+  return _genFractionMove(id);
+  }
+
+//    this.FractionAnimation = _genFractionMove(id);
+
   render(){
-    const animation = this.props.animateDots ? this.state.animationHelper : null;
-    const refVal = `animatedDot_${this.props.id}`;
+      this.animation  = (this.props.dotsAnimation === 'nothin') ? null : this.props.dotsAnimation;
+    if (this.props.dotsAnimation === 'initial-animation') {
+      this.animation = this.state.animationHelper;
+      this.delay = 0;
+      this.FractionAnimation = null;
+
+    } else if (this.props.dotsAnimation === 'jump-dots') {
+      this.animation = Animations.FlashRed;
+      this.delay = this.props.id*5;
+      this.FractionAnimation = null;
+    }
+    else if (this.props.dotsAnimation ===  'highlight-dots') {
+      this.animation = null;
+      this.fraction = null;
+      if (this.props.id % 5 === 2) {
+        this.animation = Animations.HighlightDots;
+        this.fraction = this.getMyFraction ((this.props.id - 2) / 5);}
+      this.delay = 0;
+      this.FractionAnimation = null;
+
+    } else if (this.props.dotsAnimation === 'reverse-highlight') {
+      this.animation = null;
+      this.fraction = null;
+      if (this.props.id % 5 === 2) {this.animation = 'reverse';}
+      this.delay = 0;
+      this.FractionAnimation = null;
+
+   } else if (this.props.dotsAnimation === 'move-fraction') {
+     this.animation = null;
+     this.delay = 0;
+     this.FractionAnimation = null;
+     if (this.props.id % 5 === 2) {
+       this.FractionAnimation = this.getMyFractionAnim((this.props.id - 2) / 5);
+     }
+
+   } else if (this.props.dotsAnimation === 'reverse-move-fraction') {
+     this.animation = null;
+     this.delay = 0;
+     this.FractionAnimation = null;
+     if (this.props.id % 5 === 2) {
+       this.FractionAnimation = this.getMyFractionAnim( ((this.props.id - 2) / 5), true );
+     }
+
+   } else if (this.props.dotsAnimation === 'fraction-to-links') {
+     this.animation = null;
+     this.delay = 0;
+     this.FractionAnimation = null;
+     if (this.props.id % 5 === 2) {
+       this.fraction = this.getMyFractionLink ((this.props.id - 2) / 5);
+       this.FractionAnimation = Animations.ChangeColortoGreen;
+     }
+
+ } else if (this.props.dotsAnimation === 'reverse-fraction-to-links') {
+   this.animation = null;
+   this.delay = 0;
+   this.FractionAnimation = null;
+   if (this.props.id % 5 === 2) {
+     this.fraction = this.getMyFraction ((this.props.id - 2) / 5);
+     this.FractionAnimation = 'reverse';
+   }
+ } else if (this.props.dotsAnimation === 'exit-fraction-links') {
+   this.animation = Animations.changeZIndex;
+   this.delay = 0;
+   this.FractionAnimation = null;
+   if (this.props.id % 5 === 2) {
+     this.FractionAnimation = Animations.existSearchResLinks;
+   }
+
+ }
     return (
-       <VelocityComponent animation={animation} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}} ><div ref={(component) => {this.props.that.animatedDots[this.props.id] = component;}} className={this.props.dotCss}/></VelocityComponent>
+       <VelocityComponent animation={this.animation} begin={(elem) => {setAnimationState(elem);}} delay={this.delay}  complete={(elem) => {removeAnimationState(elem);}} >
+         <div ref={(component) => {this.props.that.animatedDots[this.props.id] = component;}} className={this.props.dotCss}>
+          <VelocityComponent animation={this.FractionAnimation} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}} >
+             <div className="fraction">
+               {this.fraction}
+               </div>
+           </VelocityComponent>
+          </div>
+        </VelocityComponent>
     );
   }
 }
@@ -130,12 +301,15 @@ export default class AnimatedDot extends Component{
 // }
 
 AnimatedDot.propTypes = {
-   animateDots: React.PropTypes.bool,
    that:  React.PropTypes.object.isRequired,
    dotCss: React.PropTypes.string.isRequired,
+   dotsAnimation: React.PropTypes.string,
    id: React.PropTypes.number.isRequired,
 };
 
 AnimatedDot.defaultProps = {
  animateDots: false,
+ jumpDots: false,
+ dotsReveal: false,
+ dotsAnimation: null,
 };

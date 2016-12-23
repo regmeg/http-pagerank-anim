@@ -146,10 +146,10 @@ const Animations = {
   }),
 
   SearchResEnter: velocityHelpers.registerEffect({
-    defaultDuration: 400,
+    defaultDuration: 800,
     calls: [
       [{
-        translateY: 100,
+        translateY: 650,
         // width: [0, 100],
         // height: [0, 100],
       }, 1, {
@@ -157,6 +157,76 @@ const Animations = {
       }],
     ],
   }),
+
+   FlashRed: velocityHelpers.registerEffect({
+     defaultDuration: 100,
+     calls: [
+       [{
+        backgroundColor: '#ff0000',
+       }, 1, {
+         easing: 'ease-out',
+         loop: 5,
+       }],
+     ],
+   }),
+
+   HighlightDots: velocityHelpers.registerEffect({
+     defaultDuration: 700,
+     calls: [
+       [{
+        backgroundColor: '#EEB211',
+       }, 1, {
+         easing: 'ease-out',
+       }],
+     ],
+   }),
+
+   ChangeColortoGreen: velocityHelpers.registerEffect({
+    defaultDuration: 700,
+    calls: [
+      [{
+       color:'#006621',
+      }, 1, {
+        easing: 'ease-out',
+        //delay: delay*450,
+      }],
+    ],
+  }),
+
+  existSearchRes: velocityHelpers.registerEffect({
+   defaultDuration: 1200,
+   calls: [
+     [{
+      translateX: 1400,
+     }, 1, {
+       easing: 'ease-out',
+       //delay: delay*450,
+     }],
+   ],
+ }),
+
+ existSearchResLinks: velocityHelpers.registerEffect({
+  defaultDuration: 300,
+  calls: [
+    [{
+     translateX: 1000,
+    }, 1, {
+      easing: 'ease-out',
+      //delay: delay*450,
+    }],
+  ],
+}),
+
+changeZIndex: velocityHelpers.registerEffect({
+ defaultDuration: 2,
+ calls: [
+   [{
+     zIndex: -500,
+   }, 1, {
+     easing: 'ease-out',
+   }],
+ ],
+}),
 
 };
 

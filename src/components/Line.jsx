@@ -30,6 +30,7 @@ export default class Line extends Component {
       width: `${len}px`,
       height: `${0}px`,
       borderBottom: this.props.style || '1px solid black',
+      zIndex: -500,
     };
 
     return(
