@@ -194,10 +194,11 @@ const Animations = {
   }),
 
   existSearchRes: velocityHelpers.registerEffect({
-   defaultDuration: 1200,
+   defaultDuration: 650,
    calls: [
      [{
-      translateX: 1400,
+      translateX: '200%',
+      translateZ: 600,
      }, 1, {
        easing: 'ease-out',
        //delay: delay*450,
@@ -206,10 +207,11 @@ const Animations = {
  }),
 
  existSearchResLinks: velocityHelpers.registerEffect({
-  defaultDuration: 300,
+  defaultDuration: 600,
   calls: [
     [{
-     translateX: 1000,
+     translateX: '150%',
+     translateZ: 2000,
     }, 1, {
       easing: 'ease-out',
       //delay: delay*450,

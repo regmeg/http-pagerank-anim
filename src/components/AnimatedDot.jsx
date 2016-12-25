@@ -22,8 +22,6 @@ const translateZMaxFinal = 300;
 const perspectiveWidht = document.body.clientWidth*0.25;
 const perspectiveHeight = document.body.clientHeight*0.25;
 
-// the initial seed
-Math.seed = 120;
 
 //good options
 //Math.seed = 320;
@@ -45,7 +43,7 @@ Math.seededRandom = function randmoize(maxy, miny)  {
 //const _genRand = (min, max) => (Math.floor(_random(10) * ((max - min) + 1)) + min);
 const _genDotsScatterAnimIn = (id) => {
       //console.log(`generating helper id: ${id}`);
-      const helper = velocityHelpers.registerEffect({
+      const helperDefinition = {
       defaultDuration: 3000,
       calls: [
         [{
@@ -70,8 +68,10 @@ const _genDotsScatterAnimIn = (id) => {
           easing: 'easeInOutsine',
         }],
       ],
-    });
-    return helper;
+    };
+      //console.log(JSON.stringify({helperDefinition}));
+      const helper = velocityHelpers.registerEffect(helperDefinition);
+      return helper;
 };
 // const _genChaos1 = x => ( ( (2*Math.sin(3/x))+(3*Math.cos(5/x))+(4*Math.sin(6/x))+(1*Math.cos(3/x)) ) /10);
 // const _genChaos2 = y => ( Math.sin( (1/y) * (1/(1-y)) ) );
@@ -121,20 +121,13 @@ export default class AnimatedDot extends Component{
 
   getMyFractionLink (id) {
     this.state = this.state;
-    const fractionsInit = [
-    'superprofs.com/ca/ultimate-tips-pass-ca-cwa-cs-exams/',
-    'www.thecsclubindia.com/how-i-passed-cs-executive-in-first-attempt/',
-    'www.medical-institution.com/how-to-prepare-and-pass-usmle-step-2-cs/',
-    'www.cakart.in/blog/easy-way-to-pass-cs-in-first-attempt/',
-    'indiatoday.intoday.in/education/story/cs-tips-and-tricks/1/502394.html',
-    'www.quora.com/How-do-you-study-for-company-secretary-executive-exam-within-three-months'];
     const fractions = [
-    'superprofs..',
-    'thecsclubi..',
-    'medical-..',
-    'cakart.in/..',
-    'indiatoday/..',
-    'quora.com/..'];
+    'quora.com/How..',  //4
+    'thecsclubindia.c..',  //5
+    'superprofs.com/..',  //6
+    'cakart.in/blog/e..',  //2
+    'commercecafe.n..',  //3
+    'youtube.com/w..']; //1
     return fractions[id];
   }
 
@@ -154,37 +147,37 @@ export default class AnimatedDot extends Component{
   switch(id) {
      case 0://#4 011
         ycord = -115;
-        xcord = -183;
+        xcord = -209;
         delay = 3;
         fontS = '22px';
       break;
       case 1://#5 009
-         ycord = -105;
-         xcord = -223;
+         ycord = -102;
+         xcord = -247;
          delay = 4;
          fontS = '18px';
        break;
        case 2://#6 002
-          ycord = 142;
-          xcord = -624;
+          ycord = 149;
+          xcord = -668;
           delay = 5;
           fontS = '23px';
                 break;
         case 3://2# 242
-           ycord = -32;
-           xcord = -367;
+           ycord = -35;
+           xcord = -395;
            delay = 1;
            fontS = '15.5px';
                break;
          case 4://#3 034
-            ycord = 24;
-            xcord = -457;
+            ycord = 21;
+            xcord = -497;
             delay = 2;
             fontS = '23px';
                 break;
           case 5:// #1 512
-             ycord = 42;
-             xcord = -320;
+             ycord = 40;
+             xcord = -345;
              delay = 0;
              fontS = '14.6px';
                 break;
@@ -276,9 +269,9 @@ export default class AnimatedDot extends Component{
    this.animation = Animations.changeZIndex;
    this.delay = 0;
    this.FractionAnimation = null;
-   if (this.props.id % 5 === 2) {
-     this.FractionAnimation = Animations.existSearchResLinks;
-   }
+  //  if (this.props.id % 5 === 2) {
+  //    this.FractionAnimation = Animations.existSearchResLinks;
+  //  }
 
  }
     return (

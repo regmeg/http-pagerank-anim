@@ -13,8 +13,6 @@ import { getAnimationState, setAnimationState, removeAnimationState, forceAnimat
 import Animations from './Animations';
 import AnimatedDot from './AnimatedDot';
 
-const dotsCount = 30;
-const lines = [];
 const initialState = {
   currentAppState: 1,
   renderLayout:null,
@@ -33,8 +31,11 @@ export default class GoogleWebGraph extends Component {
     //define states
     this.state = initialState;
     //define instance vars
+    this.dotsCount = 30;
     this.animatedDots = [];
+    this.dotsHtml = [];
     this.lines = [];
+    this.specs = [];
 
     //bind methods
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
@@ -56,6 +57,9 @@ export default class GoogleWebGraph extends Component {
 Add listeners for the window keyEvents.
 */
   componentWillMount() {
+    //dots are generated based on a seed, so that each time randomazation is the sime
+    // reset the initial seed each time before dots are generated. Otherwise the seed will continue to be owerwritte from the latstly generaed value due to jumping between views.
+    Math.seed = 120;
     window.addEventListener('keydown', this._handleKeyDownandSetState, false);
 
   }
@@ -63,7 +67,7 @@ Add listeners for the window keyEvents.
   //define something just after the component has rendered.
   componentDidMount() {
     this._exapandTheGraph();
-    setTimeout(() => {     this._removeFlash();    }, 140);
+    setTimeout(() => {     this._removeFlash();  }, 140);
     setTimeout(() => {     this._drawLines();    }, 12000);
 
   }
@@ -71,6 +75,7 @@ Add listeners for the window keyEvents.
 //listener have to be removed after the View component has unmounted, otherwise the state of unmounted component will be still triggered, which can break the app and throw errors.
   componentWillUnmount() {
     window.removeEventListener('keydown', this._handleKeyDownandSetState, false);
+
   }
 
 //CUstom functions
@@ -181,7 +186,7 @@ Add listeners for the window keyEvents.
                         } else if (nextState > currentState) {
                           this._exitSearchResults();
                           // move to the next view
-                          this.props.moveGlobalState('next');
+                          setTimeout(() => {     this.props.moveGlobalState('next');    }, 500);
                         }
                         break;
                  default:
@@ -208,23 +213,23 @@ Add listeners for the window keyEvents.
 
   _drawLines() {
     //get specsStart
-    const specs = [];
-    for (let i = 0; i < dotsCount; i+=1) {
-      specs.push(this.animatedDots[i].getBoundingClientRect());
+    for (let i = 0; i < this.dotsCount; i+=1) {
+      this.specs.push(this.animatedDots[i].getBoundingClientRect());
     }
     //generate lines
-      for (let i = 0; i < dotsCount; i+=1) {
+      for (let i = 0; i < this.dotsCount; i+=1) {
       const dotStart = this.animatedDots[i];
-      const specsStart = specs[i];
-          for (let j = i+1; j < dotsCount; j+=1) {
+      const specsStart = this.specs[i];
+          for (let j = i+1; j < this.dotsCount; j+=1) {
             const dotFinish = this.animatedDots[j];
-            const specsFinish = specs[j];
-            lines.push(<Line animation={this.state.linesEnterLogo} key={(dotsCount*(i+1))+(j+1)} from={{x:specsStart.right-(specsStart.width/2),y:specsStart.bottom-(specsStart.width/2)}} to={{x:specsFinish.right-(specsStart.width/2),y:specsFinish.bottom-(specsStart.width/2)}}/>);
+            const specsFinish = this.specs[j];
+            const key = `${this.props.keyString}_line_${i}_${j}`;
+            this.lines.push(<Line animation={this.state.linesEnterLogo} key={key} from={{x:specsStart.right-(specsStart.width/2),y:specsStart.bottom-(specsStart.width/2)}} to={{x:specsFinish.right-(specsStart.width/2),y:specsFinish.bottom-(specsStart.width/2)}}/>);
 
           }
       }
 
-      this.setState({ linesRen: lines });
+      this.setState({ linesRen: this.lines });
 
   }
 
@@ -290,8 +295,9 @@ Add listeners for the window keyEvents.
     const _this = this;
     const dotsHtml = [];
                       // {renderLines ? {this.lines: null }
-    for (let i = 0; i < dotsCount; i+=1) {
-      dotsHtml.push(<AnimatedDot dotsAnimation={this.state.dotsAnimation} dotCss={this.state.dotCss} that={_this} id={i} key={i}/>);
+    for (let i = 0; i < this.dotsCount; i+=1) {
+      const key = `${this.props.keyString}_dot_${i}`;
+      dotsHtml.push(<AnimatedDot dotsAnimation={this.state.dotsAnimation} dotCss={this.state.dotCss} that={_this} id={i} key={key}/>);
     }
     return (
               <VelocityComponent animation={containerAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}}>
@@ -332,6 +338,7 @@ Add listeners for the window keyEvents.
 GoogleWebGraph.propTypes = {
   moveGlobalState: React.PropTypes.func,
   searchTerm: React.PropTypes.string,
+  keyString:  React.PropTypes.string.isRequired,
 };
 
 GoogleWebGraph.defaultProps = {
