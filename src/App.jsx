@@ -7,6 +7,7 @@ import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Animations from './components/Animations';
+import AddressBarPage from './components/AddressBarPage';
 import GoogleHome from './components/GoogleHome';
 import GoogleWebGraph from './components/GoogleWebGraph';
 import './static/css/App.css';
@@ -32,7 +33,7 @@ class App extends Component {
     //define something just before component mounts
   componentWillMount(){
     this.setState({
-      currentView:<GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+      currentView:<AddressBarPage />,
     });
   }
 
