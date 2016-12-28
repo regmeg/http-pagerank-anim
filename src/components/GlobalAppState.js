@@ -23,8 +23,8 @@ function setAnimationState(elem) {
   //console.log(`AppSate: adding new id of ${id} to the array`);
   AppState.AnimationsQueue.push(id);
   AppState.AnimationComplete = false;
-  //console.log(`AppSate: array with added ID is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete} for elem seen below`);
-  //console.log(elem);
+  console.log(`AppSate: array with added ID is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete} for elem seen below`);
+  console.log(elem);
 }
 
 function removeAnimationState(elem) {
@@ -36,7 +36,7 @@ function removeAnimationState(elem) {
   //console.log(`AppSate: adding new id of ${id} to the array, array before mod is ${arr}`);
   arr.splice(arr.indexOf(id), 1);
   if (arr.length === 0) AppState.AnimationComplete = true;
-  //console.log(`AppSate: array with removed ID is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete}`);
+  console.log(`AppSate: array with removed ID is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete}`);
 }
 
 function forceAnimationState(val, id, elem) {
@@ -45,7 +45,7 @@ function forceAnimationState(val, id, elem) {
     //set true and empty the array
     AppState.AnimationComplete = true;
     AppState.AnimationsQueue = [];
-    //console.log(`AppSate: array with forced true state is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete}`);
+    console.log(`AppSate: array with forced true state is ${AppState.AnimationsQueue}, AnimationComplete = ${AppState.AnimationComplete}`);
 
 
     // this part of the function of setting value to false and updating with value havent been neither used or tested yet.

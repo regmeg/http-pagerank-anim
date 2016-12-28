@@ -230,6 +230,234 @@ changeZIndex: velocityHelpers.registerEffect({
  ],
 }),
 
+
+
+
+LinkFadeOut: velocityHelpers.registerEffect({
+ defaultDuration: 500,
+ calls: [
+   [{
+     translateX: 400,
+     opacity: 0,
+   }, 1, {
+     easing: 'ease-out',
+   }],
+ ],
+}),
+
+LinkFadeIn: velocityHelpers.registerEffect({
+ defaultDuration: 500,
+ calls: [
+   [{
+     opacity: 1,
+     translateX: 0,
+   }, 1, {
+     easing: 'ease-out',
+   }],
+ ],
+}),
+
+LinkImFadeIn: velocityHelpers.registerEffect({
+ defaultDuration: 500,
+ calls: [
+   [{
+     opacity: 1,
+     translateX: 480,
+   }, 1, {
+     easing: 'ease-out',
+   }],
+ ],
+}),
+LinkImFadeOut: velocityHelpers.registerEffect({
+ defaultDuration: 500,
+ calls: [
+   [{
+     translateX: 0,
+     opacity: 0,
+   }, 1, {
+     easing: 'ease-out',
+   }],
+ ],
+}),
+
+TiggerLink : velocityHelpers.registerEffect({
+    defaultDuration: 150,
+    calls: [
+      [{
+        scaleX: 0.9,
+        // translateY: 10,
+      }, 1, {
+        easing: 'spring',
+        loop: 2,
+      }],
+    ],
+  }),
+
+  TiggerLinkLeft : velocityHelpers.registerEffect({
+      defaultDuration: 350,
+      calls: [
+        [{
+          translateX: 160,
+          translateY: -13,
+          opacity: 1,
+        }, 1, {
+          easing: 'spring',
+        }],
+      ],
+    }),
+  TiggerLinkRight : velocityHelpers.registerEffect({
+      defaultDuration: 350,
+      calls: [
+        [{
+          translateX: -396,
+          translateY: -13,
+          opacity: 1,
+        }, 1, {
+          easing: 'spring',
+        }],
+      ],
+    }),
+
+    MoveSearchWindow: velocityHelpers.registerEffect({
+        defaultDuration: 500,
+        calls: [
+          [{
+            translateX: -1024,
+          }, 1, {
+            easing: 'ease-in',
+          }],
+        ],
+      }),
+
+      MoveTheLink: velocityHelpers.registerEffect({
+          defaultDuration: 600,
+          calls: [
+            [{
+              translateX: 1024,
+            }, 1, {
+              easing: 'ease-in',
+            }],
+          ],
+        }),
+
+        TranslateLink: velocityHelpers.registerEffect({
+            defaultDuration: 400,
+            calls: [
+              [{
+                translateX: -850,
+                translateY: [-13, -13],
+              }, 1, {
+                easing: 'ease-in',
+                delay: 320,
+              }],
+            ],
+          }),
+
+          TrasnlateServer: velocityHelpers.registerEffect({
+              defaultDuration: 400,
+              calls: [
+                [{
+                  translateX: -850,
+                }, 1, {
+                  easing: 'ease-in',
+                  delay: 320,
+                }],
+              ],
+            }),
+
+        TargetLinkAnimF: velocityHelpers.registerEffect({
+            defaultDuration: 800,
+            calls: [
+              [{
+                translateX: 60,
+                translateY: 500,
+                opacity: 0,
+                rotateZ: -90,
+              }, 1, {
+                easing: 'ease-in',
+              }],
+            ],
+          }),
+
+        TargetLinkAnimS: velocityHelpers.registerEffect({
+            defaultDuration: 800,
+            calls: [
+              [{
+                translateX: -180,
+                translateY: 500,
+                opacity: 0,
+                rotateZ: -90,
+              }, 1, {
+                easing: 'ease-in',
+              }],
+            ],
+          }),
+
+          BlinkTopRing: velocityHelpers.registerEffect({
+              defaultDuration: 100,
+              calls: [
+                [{
+                  // color: 'blue',
+                  scaleY: -20,
+                }, 1, {
+                  easing: 'ease-in',
+                  loop: 4,
+                }],
+              ],
+            }),
+
+        BlinkMidRing: velocityHelpers.registerEffect({
+            defaultDuration: 100,
+            calls: [
+              [{
+                  // color: 'blue',
+                  scaleY: -20,
+              }, 1, {
+                easing: 'ease-in',
+                loop: 4,
+              }],
+            ],
+          }),
+
+        BlinkBotRing: velocityHelpers.registerEffect({
+            defaultDuration: 100,
+            calls: [
+              [{
+                // color: 'blue',
+                scaleY: -20,
+              }, 1, {
+                easing: 'ease-in',
+                loop: 4,
+              }],
+            ],
+          }),
+
+          // {right: '-830px', top: '0px', position:'absolute', height: '98%', width: '65%', opacity: 1, transform: perspective(50px) rotateX(-20deg) }
+
+        PopDocument: velocityHelpers.registerEffect({
+            defaultDuration: 400,
+            calls: [
+              [{
+                top: 400,
+                opacity: 1,
+              }, 1, {
+                easing: 'ease-out',
+              }],
+              [{
+                top: -20,
+                right: -830,
+                height: '98%',
+                width: '65%',
+                opacity: 1,
+                perspective: [50, 0],
+                rotateX: [-20, 0],
+              }, 1, {
+                easing: 'ease-out',
+                delay: 350,
+              }],
+            ],
+          }),
+
 };
 
 export {Animations as default} ;

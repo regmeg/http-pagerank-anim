@@ -1,0 +1,161 @@
+/*
+Name:
+Description:
+Author: will rossiter
+Copyright: Its a FREE template but i would like if you left this notice here :D
+
+*/
+
+/***Misc Tags***/
+
+.faso-img-alignleft {display:inline;float:left;margin-right:15px;}
+.faso-img-alignright {display:inline;float:right;margin-left:15px;}
+.faso-img-aligncenter {clear:both;display:block;margin-left:auto;margin-right:auto;}
+
+h1 {
+ margin: 0px;
+ padding: 0px;
+}
+
+p {margin:0;padding:0;}
+h3 {margin:0;padding:0;}
+h2 {margin:0px;padding:0px;}
+
+body {
+ background: #FFFFFF;
+ font-family: Arial, sans-serif;
+ font-size: 11px;
+ color: #000000;
+ text-align: center;
+  margin: 0px;
+ padding: 0px;
+ }
+
+pre {background-color:#333333;color:#f5f5f5;margin:0px;padding:5px;}
+
+
+
+a img{
+ border: 0px;}
+
+a {
+text-decoration: underline;
+color:#1E6A84;}
+
+a:hover {
+	color: #3252b2;
+}
+
+
+#blogtitle {
+font-family:Arial;
+font-size:12px;
+ margin: 0px;
+ padding: 0px;
+
+}
+
+#blogsubtitle {
+font-family:Arial;
+font-size:12px;
+color:#666666;
+ margin: 0px;
+ padding: 0px;
+
+}
+
+#blogsubtitle b {
+color:#000000;
+}
+
+.blog-main_image_caption {
+font-family:arial;
+font-size:13px;
+font-style:italic;
+}
+
+
+
+#topcolor {
+background-color:#FFFFFF;
+background-repeat:repeat-x;
+padding-top:10px;
+}
+
+#blogtitle a {
+text-decoration:none;
+}
+
+#blogtitle a:hover {
+text-decoration:underline;
+}
+
+#blogtitle h1 {
+text-decoration:none;
+font-size:24px;
+line-height:30px;
+
+}
+
+#blogarticle {
+font-family:Arial;
+font-size:18px;
+font-weight:bold;
+
+}
+
+#blogpost {
+
+font-family:georgia;
+font-size:16px;
+line-height:24px;
+
+}
+
+td {
+font-family:georgia;
+font-size:16px;
+line-height:24px;
+}
+
+.blog_comment {
+font-family:arial,sans-serif;
+font-size:13px;
+line-height:21px;
+padding-left:20px;
+padding-right:20px;
+padding-top:10px;
+padding-bottom:10px;
+}
+
+#blog_comment_odd {
+background-color:#f5f5f5;
+}
+
+
+/***Top Navigation - try not to findle this took me a while to work out and get right***/
+
+#navheading {
+ color:#333333;
+ font-family:Garamond,arial;
+ font-size:18px;
+ font-weight:bold;
+ }
+
+#topnav {
+ color:#999999;
+ font-family:arial;
+ }
+
+#topnav a{
+ text-align: center;
+ text-decoration: underline;
+ color: #3252b2;
+ font-family:Arial;
+ font-size: 13px;
+
+
+#topnav a:hover {
+ color: #434338;
+ text-decoration:none;
+ }

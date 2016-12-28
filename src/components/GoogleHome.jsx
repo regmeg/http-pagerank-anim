@@ -42,7 +42,9 @@ export default class GoogleHome extends Component {
     this._handleChange = this._handleChange.bind(this);
 
     this._changeParentClassToFocus = this._changeParentClassToFocus.bind(this);
+    this._changeParentClassToFocusInit = this._changeParentClassToFocus.bind(this);
     this._changeParentClassToBlur  = this._changeParentClassToBlur.bind(this);
+    this._changeParentClassToBlurInit  = this._changeParentClassToBlur.bind(this);
     this._changeParentClassToFire  = this._changeParentClassToFire.bind(this);
     this._changeServerLogoClassToStill   = this._changeServerLogoClassToStill.bind(this);
     this._changeServerLogoClassToScaling = this._changeServerLogoClassToScaling.bind(this);
@@ -55,6 +57,8 @@ export default class GoogleHome extends Component {
     this._spwanServerReverse   = this._spwanServerReverse.bind(this);
     this._firePacket           = this._firePacket.bind(this);
     this._flashServer          = this._flashServer.bind(this);
+
+    this.dummyFunc = this.dummyFunc.bind(this);
   }
 
 
@@ -189,6 +193,8 @@ export default class GoogleHome extends Component {
 //Fcunctions for triggering animation and reverses
 ****************************************************************************************/
     _triggerSearch () {
+      this._changeParentClassToFocus = this.dummyFunc.bind(this);
+      this._changeParentClassToBlur = this.dummyFunc.bind(this);
       this.setState({
         currentAppState: 1,
         GoogleLogoOut: Animations.GoogleLogoOut,
@@ -204,6 +210,8 @@ export default class GoogleHome extends Component {
     }
 
     _triggerSearchReverse () {
+      this._changeParentClassToFocus = this._changeParentClassToFocusInit.bind(this);
+      this._changeParentClassToBlur = this._changeParentClassToBlurInit.bind(this);
       this.setState({
         GoogleSearchBarTransform: 'reverse',
         GoogleLogoOut: 'reverse',
@@ -233,7 +241,6 @@ export default class GoogleHome extends Component {
 
     _firePacket() {
       console.log('firing packet');
-      const _this = this;
       this._changeParentClassToMoveFurther();
       this._changeServerLogoClassToStill();
       //setTimeout(() => {     _this._changeParentClassToFlcikerFurther();    }, 200);
@@ -243,6 +250,10 @@ export default class GoogleHome extends Component {
       this.setState({
         ServerImgEnterAnim: Animations.FlashServer,
       });
+    }
+
+    dummyFunc() {
+      this.dummy = this.dummy;
     }
 
 /***************************************************************************************

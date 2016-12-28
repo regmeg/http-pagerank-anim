@@ -188,8 +188,10 @@ export default class AnimatedDot extends Component{
     defaultDuration: 700,
     calls: [
       [{
-       translateX: xcord,
-       translateY: ycord,
+      //  translateX: xcord,
+      top: ycord,
+      left: xcord,
+       //translateY: ycord,
        fontSize: fontS,
        color:'#5591F5',
        width: wid,
