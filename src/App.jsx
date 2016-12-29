@@ -33,7 +33,7 @@ class App extends Component {
     //define something just before component mounts
   componentWillMount(){
     this.setState({
-      currentView:<AddressBarPage />,
+      currentView:<AddressBarPage moveGlobalState = {this._handleGlobalStateChange}/>,
     });
   }
 
@@ -71,7 +71,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <GoogleHome key={'GoogleHome'} moveGlobalState = {this._handleGlobalStateChange} />,
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,
                      //tranistionName: "",
                    });
                      //if we come from a smaller state, it is a bug, log an error.

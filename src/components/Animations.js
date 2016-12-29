@@ -147,6 +147,28 @@ const Animations = {
     ],
   }),
 
+  AddressBarIn: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-512px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  AddressBarOut: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-3000px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
 };
 
 export {Animations as default} ;

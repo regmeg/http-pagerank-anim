@@ -9,12 +9,25 @@ class AddressBar extends Component {
     super(props);
     this.state = {
       addressBarText: props.text,
+      animationClassName: props.animationClassName,
     };
+    this.animateOut = this.animateOut.bind(this);
+    this.animateIn = this.animateIn.bind(this);
+  }
+
+  animateOut() {
+    console.log("Sliding out");
+    this.setState({animationClassName: "slideOut"});
+  }
+
+  animateIn() {
+    console.log("Sliding in");
+    this.setState({animationClassName: "slideIn"});
   }
 
   render(){
     return(
-      <div id="addressbar" className="addressbar">
+      <div className="addressbar">
           <SelfFulfillingTextBox text={this.state.addressBarText} showbutton={false} />
       </div>
     )
