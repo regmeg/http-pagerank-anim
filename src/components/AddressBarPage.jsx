@@ -59,10 +59,10 @@ class AddressBarPage extends Component {
         //37 is if back arrow is pressed. 39 if foward key. Add or remove state corespondingly
         if (event.keyCode === 37) {
           this.setState({addressBarAnimation: Animations.AddressBarIn});
-            this.props.moveGlobalState('previous');
+          this.props.moveGlobalState('previous');
         } else if (event.keyCode === 39) {
           this.setState({addressBarAnimation: Animations.AddressBarOut});
-            this.props.moveGlobalState('next');
+          this.props.moveGlobalState('next');
         }
   }
 
@@ -73,9 +73,7 @@ class AddressBarPage extends Component {
       <VelocityComponent animation={this.state.addressBarAnimation} 
                          begin={(elem) => {setAnimationState(elem);}}
                          complete={(elem) => {removeAnimationState(elem);}}>
-        
           <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass}/>
-       
       </VelocityComponent>
           </div>
       
