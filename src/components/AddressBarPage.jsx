@@ -70,12 +70,12 @@ class AddressBarPage extends Component {
   render() {
     return (
       <div className="addressBarContainer">
-      <VelocityComponent animation={this.state.addressBarAnimation} 
-                         begin={(elem) => {setAnimationState(elem);}}
-                         complete={(elem) => {removeAnimationState(elem);}}>
-          <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass}/>
-      </VelocityComponent>
-          </div>
+        <VelocityComponent animation={this.state.addressBarAnimation}
+                           begin={(elem) => {setAnimationState(elem);}}
+                           complete={(elem) => {removeAnimationState(elem);}}>
+            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass}/>
+        </VelocityComponent>
+      </div>
       
     );
   }
