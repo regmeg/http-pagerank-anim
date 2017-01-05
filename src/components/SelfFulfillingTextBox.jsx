@@ -28,6 +28,10 @@ class SelfFulfillingTextBox extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   handleSubmit(event){
 
   }

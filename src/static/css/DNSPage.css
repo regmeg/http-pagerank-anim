@@ -3,3 +3,10 @@
   background:green;
   margin-top: 20%;
 }
+
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+}
