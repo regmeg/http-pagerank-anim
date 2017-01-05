@@ -16,7 +16,7 @@ class DNSLookupTable extends Component {
       'www.soton.ac.uk': '152.78.118.51',
       'whatweekisit.soton.ac.uk': '152.78.129.43',
       'imgur.com': '151.101.60.193',
-      'www.giggle.com': '42.42.42.42',
+      'www.giggles.com': '42.42.42.42',
     };
   }
 
@@ -42,10 +42,7 @@ class DNSLookupTable extends Component {
 
     return(
       <ul>
-        {items.map(function(lis){
-           return (lis);
-         }
-        )}
+        {items.map(function(lis){return (lis);})}
       </ul>
     );
   }
