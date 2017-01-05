@@ -28,9 +28,9 @@ class DNSLookupTable extends Component {
     var items = [];
     for(var key in this.dnslist){
         items.push(
-
-          <div>{key} - {this.dnslist[key]}</div>
-
+            <div>
+              <span id={key}>➜</span><span>{key} - {this.dnslist[key]}</span>
+            </div>
         )
     }
 
