@@ -6,19 +6,18 @@ class DNSLookupTable extends Component {
     super(props);
     this.state = {
       searching: true,
-      searchingFor: this.props.searchingFor || 'www.giggles.com',
       refreshRate: 250,
     };
 
-    this.dnslist = [
-      'www.google.com',
-      'www.facebook.com',
-      'en.wikipedia.org',
-      'www.soton.ac.uk',
-      'whatweekisit.soton.ac.uk',
-      'imgur.com',
-      this.state.searchingFor,
-    ]
+    this.dnslist = {
+      'www.google.com': '74.125.206.105',
+      'www.facebook.com': '157.240.1.35',
+      'en.wikipedia.org': '91.198.174.192',
+      'www.soton.ac.uk': '152.78.118.51',
+      'whatweekisit.soton.ac.uk': '152.78.129.43',
+      'imgur.com': '151.101.60.193',
+      'www.giggle.com': '42.42.42.42',
+    };
   }
 
   componentDidMount() {
@@ -36,11 +35,17 @@ class DNSLookupTable extends Component {
   }
 
   render(){
+    var items = [];
+    for(var key in this.dnslist){
+        items.push(<li>{key} - {this.dnslist[key]}</li>)
+    }
+
     return(
       <ul>
-        {this.dnslist.map(function(name, index){
-          return <li key={ index }>{name}</li>;
-        })}
+        {items.map(function(lis){
+           return (lis);
+         }
+        )}
       </ul>
     );
   }
