@@ -50,7 +50,7 @@ class App extends Component {
   _handleGlobalStateChange(direction){
     console.log('calling globalstate');
         //set the max state here
-        const maxAppSate = 1;
+        const maxAppSate = 2;
         //save last state
         const currentState = this.state.currentGloabalState;
         let nextState;

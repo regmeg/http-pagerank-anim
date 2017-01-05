@@ -21,29 +21,23 @@ class DNSLookupTable extends Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.tick(), this.state.fillspeed);
-  }
-
-  tick() {
-    this.setState(prevState => ({
-      lettersToShow: prevState.lettersToShow + 1,
-      currentText: prevState.fulltext.substring(0, prevState.lettersToShow),
-    }));
-    if (this.state.lettersToShow > this.state.fulltext.length) {
-      clearInterval(this.interval);
-    }
+    
   }
 
   render(){
     var items = [];
     for(var key in this.dnslist){
-        items.push(<li>{key} - {this.dnslist[key]}</li>)
+        items.push(
+
+          <div>{key} - {this.dnslist[key]}</div>
+
+        )
     }
 
     return(
-      <ul>
-        {items.map(function(lis){return (lis);})}
-      </ul>
+        <div>
+          {items.map(function(lis){return (lis);})}
+        </div>
     );
   }
 }

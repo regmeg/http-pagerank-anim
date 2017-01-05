@@ -170,10 +170,10 @@ const Animations = {
   }),
 
   DNSTableIn: velocityHelpers.registerEffect({
-    defaultDuration: 250,
+    defaultDuration: 400,
     calls: [
       [{
-        translateX: "0px",
+        translateX: "-50px",
       }, 1, {
         easing: 'ease-in-out',
       }],
@@ -184,7 +184,7 @@ const Animations = {
     defaultDuration: 250,
     calls: [
       [{
-        translateX: "700px",
+        translateX: "-3000px",
       }, 1, {
         easing: 'ease-in-out',
       }],
