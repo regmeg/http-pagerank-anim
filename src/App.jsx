@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Animations from './components/Animations';
 import AddressBarPage from './components/AddressBarPage';
+import DNSPage from './components/DNSPage';
 import GoogleHome from './components/GoogleHome';
 import GoogleWebGraph from './components/GoogleWebGraph';
 import './static/css/App.css';
@@ -77,6 +78,18 @@ class App extends Component {
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
                       console.error(`Cannot come from a smaller state to the 0 state. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
+                   }
+                   break;
+              case 1:
+                   // if we come back from a bigger state, set the initial view
+                   if (currentState > nextState) {
+                     this.setState({
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,
+                     //tranistionName: "",
+                   });
+                   } else if (nextState > currentState) {
+                      this.setState({
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
                    }
                    break;
               case maxAppSate:

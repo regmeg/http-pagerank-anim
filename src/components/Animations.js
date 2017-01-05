@@ -169,6 +169,29 @@ const Animations = {
     ],
   }),
 
+  DNSTableIn: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "0px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  DNSTableOut: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "700px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+
 };
 
 export {Animations as default} ;
