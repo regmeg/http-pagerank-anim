@@ -10,3 +10,11 @@
 
 .visible {
 }
+
+blink, .blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0 }
+}

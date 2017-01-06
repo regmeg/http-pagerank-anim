@@ -5,6 +5,7 @@ class DNSLookupTable extends Component {
   constructor(props){
     super(props);
     this.state = {
+      blinkmaggedon: false,
       visibilityClassNames: this._getVisibilityArray(0),
       arrowIndex: 0,
     };
@@ -55,7 +56,7 @@ class DNSLookupTable extends Component {
 
     if(this.state.arrowIndex === Object.keys(this.state.visibilityClassNames).length) {
       clearInterval(this.interval);
-      //TODO: make blinky and invoke next event.
+      this.setState({blinkmaggedon: true});
     }
   }
 
@@ -64,7 +65,8 @@ class DNSLookupTable extends Component {
     for(var key in this.dnslist){
       items.push(
         <div>
-          <span id={key} className={this.state.visibilityClassNames[key]}>➜</span><span>{key} - {this.dnslist[key]}</span>
+          <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
+          <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
         </div>
       )
     }
