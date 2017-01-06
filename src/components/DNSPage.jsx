@@ -14,6 +14,7 @@ class DNSPage extends Component {
     super(props);
 
     this.state = {
+      currentAppState: 0,
       tableAnimation: null
     };
 
@@ -29,22 +30,63 @@ class DNSPage extends Component {
   }
 
   componentWillUnmount() {
-    this.setState({tableAnimation: Animations.DNSTableOut});
     window.removeEventListener('keydown', this._handleKeyDownandSetState, false);
   }
 
   _handleKeyDownandSetState (event){
-      // if animation still in progress. just return
-      if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
+    // if animation still in progress. just return
+    if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
+        //set the max state here
+        const maxAppSate = 2;
 
+        //save last state
+        const currentState = this.state.currentAppState;
+        let nextState;
+        //set the new state
         //37 is if back arrow is pressed. 39 if foward key. Add or remove state corespondingly
         if (event.keyCode === 37) {
-          //this.setState({addressBarAnimation: Animations.AddressBarIn});
-            this.props.moveGlobalState('previous');
+            nextState = (currentState <= 0) ? 0 : currentState - 1;
         } else if (event.keyCode === 39) {
-          //this.setState({addressBarAnimation: Animations.AddressBarOut});
-            this.props.moveGlobalState('next');
+            nextState = (currentState >= maxAppSate) ? maxAppSate : currentState + 1;
         }
+
+        console.log(`[DNSLOOKUPTABLE] next AppState is: ${nextState}, current Appstate is: ${currentState}`);
+
+        //based on state perform animation or animation reversal, as well as reverse animation
+        switch(nextState) {
+            case 0:
+                //this.setState(initialState);
+                // if we come back from a bigger state, reverse that bigger state animation
+                if (currentState > nextState) {
+                    console.log("Thou shalt exit this screen to previous");
+                    this.props.moveGlobalState('previous');
+                } else if (nextState > currentState) {
+                    console.error(`Cannot come from a smaller state to the 0 state. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
+                }
+                break;
+            case 1:
+                if (currentState > nextState) {
+                    //backward
+                    this._dnsTable.stop_search();
+                } else if (nextState > currentState) {
+                    //forward
+                    this._dnsTable.stop_search();
+                }
+                break;
+            case maxAppSate: //do final animations (if any) and move to next screen.
+                if (currentState > nextState) {
+                    console.error(`Cannot come from a bigger state to the maxAppState. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
+                } else if (nextState > currentState) {
+                    console.log("thou shalt exit screen to nexxt");
+                    this.setState({tableAnimation: Animations.DNSTableOut});
+                    this.props.moveGlobalState('next');
+                }
+                break;
+            default:
+                console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
+        }
+            //set the state enevtually
+    this.setState({ currentAppState: nextState});
   }
 
   render() {
@@ -53,7 +95,7 @@ class DNSPage extends Component {
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
           <div className="dnstable">
-              <DNSLookupTable/>
+              <DNSLookupTable ref={(dnsTable) => { this._dnsTable = dnsTable; }}/>
           </div>
       </VelocityComponent>
     );

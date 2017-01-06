@@ -8,6 +8,7 @@ class DNSLookupTable extends Component {
       blinkmaggedon: false,
       visibilityClassNames: this._getVisibilityArray(0),
       arrowIndex: 0,
+      entryFound: false,
     };
 
     this.dnslist = {
@@ -60,22 +61,45 @@ class DNSLookupTable extends Component {
     }
   }
 
-  render(){
-    var items = [];
-    for(var key in this.dnslist){
-      items.push(
-        <div>
-          <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
-          <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
-        </div>
-      )
-    }
-
-    return(
-        <div>
-          {items.map(function(lis){return (lis);})}
-        </div>
+  start_search() {
+    this.setState(
+      {
+        blinkmaggedon: true,
+        entryFound: false
+      }
     );
+  }
+
+  stop_search() {
+    this.setState(
+      {
+        blinkmaggedon: false,
+        entryFound: true
+      }
+    );
+  }
+
+  render(){
+      var items = [];
+          for(var key in this.dnslist){
+              items.push(
+                  <div>
+                      <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
+                      <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
+                  </div>
+              )
+          }
+
+      return(
+          <div>
+          {!this.state.entryFound ? items.map(function(lis){return (lis);}) :
+          <div>
+            <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
+            <span>www.giggles.com - 42.42.42.42</span>
+          </div>
+          }
+          </div>
+      );
   }
 }
 

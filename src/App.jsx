@@ -63,7 +63,7 @@ class App extends Component {
         }
 
 
-          console.log(`next GlobalState is: ${nextState}, current GlobalState is: ${currentState}`);
+          console.log(`[APP] next GlobalState is: ${nextState}, current GlobalState is: ${currentState}`);
 
           //based on state decide which view to generate
           switch(nextState) {
