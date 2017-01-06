@@ -94,7 +94,6 @@ class DNSLookupTable extends Component {
           <div>
           {!this.state.entryFound ? items.map(function(lis){return (lis);}) :
           <div>
-            <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
             <span>www.giggles.com - 42.42.42.42</span>
           </div>
           }

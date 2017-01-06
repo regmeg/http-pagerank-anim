@@ -85,7 +85,7 @@ class DNSPage extends Component {
             default:
                 console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
         }
-            //set the state enevtually
+    //set the state enevtually
     this.setState({ currentAppState: nextState});
   }
 
