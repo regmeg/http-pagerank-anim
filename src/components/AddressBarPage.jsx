@@ -7,7 +7,9 @@ import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'vel
 
 import Animations from './Animations';
 import AddressBar from './AddressBar';
+import DNSLookupTable from './DNSLookupTable';
 import '../static/css/AddressBarPage.css';
+
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
 
 
@@ -18,6 +20,7 @@ class AddressBarPage extends Component {
     super(props);
     //set states
     this.state = {
+      phase: this.props.phase,
       addressBarAnimation: Animations.AddressBarIn,
     };
 
@@ -69,12 +72,22 @@ class AddressBarPage extends Component {
  //Render everying
   render() {
     return (
+      <div>
       <div className="addressBarContainer">
         <VelocityComponent animation={this.state.addressBarAnimation}
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
-            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass}/>
+            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.phase !== 'postdns'}/>
+
         </VelocityComponent>
+      </div>
+      {this.state.phase === "postdns" && 
+          <div className="centralizer">
+          <div className="dnsresult">
+            www.giggles.com - 42.42.42.42
+          </div>
+          </div>
+      }
       </div>
       
     );

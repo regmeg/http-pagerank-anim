@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'velocity-react';
 
 import Animations from './Animations';
-import '../static/css/DNSPage.css';
 import DNSLookupTable from './DNSLookupTable';
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
 
@@ -79,7 +78,8 @@ class DNSPage extends Component {
                 } else if (nextState > currentState) {
                     console.log("thou shalt exit screen to nexxt");
                     this.setState({tableAnimation: Animations.DNSTableOut});
-                    this.props.moveGlobalState('next');
+                    setTimeout(() => {     this.props.moveGlobalState('next');    }, 100);
+                    //this.props.moveGlobalState('next');
                 }
                 break;
             default:
@@ -94,9 +94,9 @@ class DNSPage extends Component {
         <VelocityComponent animation={this.state.tableAnimation}
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
-          <div className="dnstable">
+          
               <DNSLookupTable ref={(dnsTable) => { this._dnsTable = dnsTable; }}/>
-          </div>
+          
       </VelocityComponent>
     );
   }

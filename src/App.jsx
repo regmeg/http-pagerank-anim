@@ -34,7 +34,7 @@ class App extends Component {
     //define something just before component mounts
   componentWillMount(){
     this.setState({
-      currentView:<AddressBarPage moveGlobalState = {this._handleGlobalStateChange}/>,
+      currentView:<AddressBarPage moveGlobalState = {this._handleGlobalStateChange} phase='predns'/>,
     });
   }
 
@@ -50,7 +50,7 @@ class App extends Component {
   _handleGlobalStateChange(direction){
     console.log('calling globalstate');
         //set the max state here
-        const maxAppSate = 2;
+        const maxAppSate = 3;
         //save last state
         const currentState = this.state.currentGloabalState;
         let nextState;
@@ -72,9 +72,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,
-                     //tranistionName: "",
-                   });
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} phase='predns'/>,});
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
                       console.error(`Cannot come from a smaller state to the 0 state. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
@@ -84,12 +82,20 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,
-                     //tranistionName: "",
-                   });
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
                    } else if (nextState > currentState) {
                       this.setState({
                        currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
+                   }
+                   break;
+              case 2:
+                   // if we come back from a bigger state, set the initial view
+                   if (currentState > nextState) {
+                     this.setState({
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
+                   } else if (nextState > currentState) {
+                      this.setState({
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} phase='postdns' />,});
                    }
                    break;
               case maxAppSate:
@@ -100,9 +106,7 @@ class App extends Component {
                       } else if (nextState > currentState) {
                         this.setState({
                           currentView:
-                           <GoogleWebGraph  key={'GoogleWebGraph'} moveGlobalState = {this._handleGlobalStateChange} />,
-                          //tranistionName: "",
-                        });
+                           <GoogleWebGraph  key={'GoogleWebGraph'} moveGlobalState = {this._handleGlobalStateChange} />,});
                       }
                       break;
                default:

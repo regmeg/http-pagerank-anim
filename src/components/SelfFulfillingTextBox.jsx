@@ -11,11 +11,18 @@ class SelfFulfillingTextBox extends Component {
       showbutton: props.showbutton,
       lettersToShow: 1,
       currentText: '',
+      withAnimation: props.withAnimation,
     };
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.tick(), this.state.fillspeed);
+    if(this.state.withAnimation){
+      this.interval = setInterval(() => this.tick(), this.state.fillspeed);
+    } else {
+      this.setState(prevState => ({
+        currentText: prevState.fulltext,
+      }));
+    }
   }
 
   tick() {
@@ -43,9 +50,8 @@ class SelfFulfillingTextBox extends Component {
           {this.state.labeltext}
           <input type="text" value={this.state.currentText} onChange={this.handleChange} />
         </label>
-        {this.state.showbutton ?
-        <input type="submit" value="Submit" />
-        : null}
+        {this.state.showbutton &&
+        <input type="submit" value="Submit" />}
       </form>
     );
   }

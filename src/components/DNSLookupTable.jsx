@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import '../static/css/DNSPage.css';
 
 class DNSLookupTable extends Component {
   constructor(props){
@@ -8,7 +9,7 @@ class DNSLookupTable extends Component {
       blinkmaggedon: false,
       visibilityClassNames: this._getVisibilityArray(0),
       arrowIndex: 0,
-      entryFound: false,
+      entryFound: false
     };
 
     this.dnslist = {
@@ -91,13 +92,13 @@ class DNSLookupTable extends Component {
           }
 
       return(
-          <div>
+        <div className="dnstable">
           {!this.state.entryFound ? items.map(function(lis){return (lis);}) :
           <div>
             <span>www.giggles.com - 42.42.42.42</span>
           </div>
           }
-          </div>
+        </div>
       );
   }
 }

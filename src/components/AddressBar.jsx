@@ -10,6 +10,7 @@ class AddressBar extends Component {
     this.state = {
       addressBarText: props.text,
       animationClassName: props.animationClassName,
+      withAnimation: props.withAnimation,
     };
     this.animateOut = this.animateOut.bind(this);
     this.animateIn = this.animateIn.bind(this);
@@ -28,7 +29,7 @@ class AddressBar extends Component {
   render(){
     return(
       <div className="addressbar">
-          <SelfFulfillingTextBox text={this.state.addressBarText} showbutton={false} />
+          <SelfFulfillingTextBox text={this.state.addressBarText} showbutton={false} withAnimation={this.state.withAnimation}/>
       </div>
     )
   }
