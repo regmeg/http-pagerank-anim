@@ -13,7 +13,7 @@ class DNSPage extends Component {
     super(props);
 
     this.state = {
-      currentAppState: 0,
+      currentAppState: this.props.currentAppState,
       tableAnimation: null
     };
 
@@ -26,6 +26,7 @@ class DNSPage extends Component {
 
   componentDidMount() {
     this.setState({tableAnimation: Animations.DNSTableIn});
+    this._dnsTable.set_searching(this.state.currentAppState==0)
   }
 
   componentWillUnmount() {
@@ -56,20 +57,25 @@ class DNSPage extends Component {
             case 0:
                 //this.setState(initialState);
                 // if we come back from a bigger state, reverse that bigger state animation
-                if (currentState > nextState) {
+                if (currentState > nextState /*|| (currentState==nextState && nextState==0)*/) {
+                    //backwards
                     console.log("Thou shalt exit this screen to previous");
                     this.props.moveGlobalState('previous');
                 } else if (nextState > currentState) {
                     console.error(`Cannot come from a smaller state to the 0 state. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
+                    //forward
                 }
                 break;
             case 1:
                 if (currentState > nextState) {
                     //backward
-                    this._dnsTable.stop_search();
+                    console.log("case1/backward");
+                    this._dnsTable.set_searching(true);
                 } else if (nextState > currentState) {
                     //forward
-                    this._dnsTable.stop_search();
+                    console.log("case1/forward");
+                    this._dnsTable.set_searching(false);
+                    
                 }
                 break;
             case maxAppSate: //do final animations (if any) and move to next screen.

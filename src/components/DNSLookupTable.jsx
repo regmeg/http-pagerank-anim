@@ -62,23 +62,15 @@ class DNSLookupTable extends Component {
     }
   }
 
-  start_search() {
+  set_searching(is_searching) {
     this.setState(
       {
-        blinkmaggedon: true,
-        entryFound: false
+        blinkmaggedon: is_searching,
+        entryFound: !is_searching
       }
     );
   }
 
-  stop_search() {
-    this.setState(
-      {
-        blinkmaggedon: false,
-        entryFound: true
-      }
-    );
-  }
 
   render(){
       var items = [];

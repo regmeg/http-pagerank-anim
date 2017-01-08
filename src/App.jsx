@@ -72,6 +72,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
+                      //backwards
                        currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
@@ -81,19 +82,23 @@ class App extends Component {
               case 1:
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
+                      //backwards
                      this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={1}/>,});
                    } else if (nextState > currentState) {
+                      //forwards
                       this.setState({
-                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                    }
                    break;
               case 2:
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
+                     //backwards
                      this.setState({
-                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                    } else if (nextState > currentState) {
+                    //forwards
                       this.setState({
                        currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={1}/>,});
                    }
