@@ -35,8 +35,12 @@ td {
   display: inline-block;
 }
 
-
-
 .centralizer  {
   text-align: center;
+}
+
+.leftrightimages {
+  margin: 10px;
+  width: 150;
+  height: 150;
 }

@@ -9,6 +9,8 @@ import Animations from './Animations';
 import AddressBar from './AddressBar';
 import DNSLookupTable from './DNSLookupTable';
 import '../static/css/AddressBarPage.css';
+import laptopImg from '../static/img/laptop.png';
+import serverImg from '../static/img/server_blue.png';
 
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
 
@@ -21,14 +23,17 @@ class AddressBarPage extends Component {
     this.state = {
       currentAppState: props.currentAppState,
       addressBarAnimation: Animations.AddressBarIn,
+
+      showDNSResponseLine: props.currentAppState==1,
+      showGetPacket: false,
+      showLaptop: false,
+      showServer: false,
+      showResponsePacket: false,
+      animateTextBox: props.currentAppState==0,
     };
 
-    this.preDNS = 0;
-    this.postDNS = 1;
-    this.packetTime = 2;
-
     this.packet_table_data = {
-      'source': "127.0.0.1",
+      'source': "12.34.56.78",
       'destination': "42.42.42.42",
       'sequence number': "1",
       'checksum': "59bcc3ad6775562f845953cf01624225",
@@ -40,6 +45,31 @@ class AddressBarPage extends Component {
       "User-Agent: Chrome/55.0.2883.87 (X11; Linux x86_64)",
       "Host: www.google.com",
       "Accept: */*",
+    ]
+
+
+    this.packet_table_data_response = {
+      'source': "42.42.42.42",
+      'destination': "12.34.56.78",
+      'sequence number': "1",
+      'checksum': "12.34.56.78",
+      '...': '...',
+    }
+
+    this.packet_table_data_response_data = [
+      "HTTP/1.1 200 OK",
+      "Date: Tue, 10 Jan 2016 12:00:21 GMT",
+      "Server: nginx/1.11.7",
+      "Last-Modified: Tue, 10 Jan 2016 11:45:16 GMT",
+      "Content-Length: 88",
+      "Content-Type: text/html",
+      "Connection: keep-alive",
+      "",
+      "<html>",
+      " <body>",
+      "   <h1>Hello, World!</h1>",
+      " </body>",
+      "</html>"
     ]
 
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
@@ -59,7 +89,7 @@ class AddressBarPage extends Component {
     // if animation still in progress. just return
     if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
         //set the max state here
-        const maxAppSate = 3;
+        const maxAppSate = 5;
 
         //save last state
         const currentState = this.state.currentAppState;
@@ -102,9 +132,24 @@ class AddressBarPage extends Component {
                 } else if (nextState > currentState) {
                     //forward
                     //http packet shown by state change to 2 already.
-                    this.setState({addressBarAnimation: Animations.AddressBarUpSome});
+                    this.setState(
+                      {
+                        addressBarAnimation: Animations.AddressBarUpSome,
+                        packetAnimation: Animations.AddressBarUpSome,
+                        showGetPacket: true,
+                      });
                     
                 }
+                break;
+            case 4:
+                //show left side of the packet
+                if (currentState > nextState) {
+                    //backward
+                } else if (nextState > currentState) {
+                    //forward                    
+                }
+                break;
+            case 5:
                 break;
             case maxAppSate: //do final animations (if any) and move to next screen.
                 if (currentState > nextState) {
@@ -149,31 +194,40 @@ class AddressBarPage extends Component {
         <VelocityComponent animation={this.state.addressBarAnimation}
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
-            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.currentAppState==this.preDNS}/>
+            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.animateTextBox}/>
 
         </VelocityComponent>
       </div>
       
-      {this.state.currentAppState == this.packetTime &&
-        <VelocityComponent animation={this.state.addressBarAnimation}
-                           begin={(elem) => {setAnimationState(elem);}}
-                           complete={(elem) => {removeAnimationState(elem);}}>
+      
+        <VelocityComponent animation={this.state.packetAnimation}
+                     begin={(elem) => {setAnimationState(elem);}}
+                     complete={(elem) => {removeAnimationState(elem);}}>
         <div className="centralizer">
-          <table className="httppacket">
-            {packet_table_render}
-            <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data}</td></tr>
-          </table>
-        
+          {(this.state.showLaptop) &&
+            <img src={laptopImg} className="leftrightimages"/>
+          }
+          {this.state.showGetPacket &&
+            <table className="httppacket">
+              {packet_table_render}
+              <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data}</td></tr>
+            </table>
+          }
+          {this.state.showServer &&
+            <img src={serverImg} className="leftrightimages"/>
+          }
         </div>
-        </VelocityComponent>
-      }
-      {this.state.currentAppState == this.postDNS && 
-          <div className="centralizer">
+      </VelocityComponent>
+      
+      {this.state.showDNSResponseLine && 
+        <div className="centralizer">
           <div className="dnsresult">
             www.giggles.com - 42.42.42.42
           </div>
-          </div>
+        </div>
       }
+
+      
       </div>
       
     );
