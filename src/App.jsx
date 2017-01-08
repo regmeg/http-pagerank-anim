@@ -34,7 +34,7 @@ class App extends Component {
     //define something just before component mounts
   componentWillMount(){
     this.setState({
-      currentView:<AddressBarPage moveGlobalState = {this._handleGlobalStateChange} phase='predns'/>,
+      currentView:<AddressBarPage moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,
     });
   }
 
@@ -72,7 +72,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} phase='predns'/>,});
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
                       console.error(`Cannot come from a smaller state to the 0 state. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
@@ -82,7 +82,7 @@ class App extends Component {
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                    } else if (nextState > currentState) {
                       this.setState({
                        currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
@@ -95,7 +95,7 @@ class App extends Component {
                        currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} />,});
                    } else if (nextState > currentState) {
                       this.setState({
-                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} phase='postdns' />,});
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={1}/>,});
                    }
                    break;
               case maxAppSate:

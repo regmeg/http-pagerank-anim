@@ -158,6 +158,17 @@ const Animations = {
     ],
   }),
 
+  AddressBarUpSome: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateY: "-200px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
   AddressBarOut: velocityHelpers.registerEffect({
     defaultDuration: 250,
     calls: [
@@ -173,7 +184,7 @@ const Animations = {
     defaultDuration: 400,
     calls: [
       [{
-        translateX: "-50px",
+        translateX: "-70px",
       }, 1, {
         easing: 'ease-in-out',
       }],

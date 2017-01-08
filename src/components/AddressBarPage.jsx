@@ -16,11 +16,31 @@ import { getAnimationState, setAnimationState, removeAnimationState, forceAnimat
 class AddressBarPage extends Component {
 
   constructor(props) {
+
     super(props);
     this.state = {
-      phase: this.props.phase,
+      currentAppState: props.currentAppState,
       addressBarAnimation: Animations.AddressBarIn,
     };
+
+    this.preDNS = 0;
+    this.postDNS = 1;
+    this.packetTime = 2;
+
+    this.packet_table_data = {
+      'source': "127.0.0.1",
+      'destination': "42.42.42.42",
+      'sequence number': "1",
+      'checksum': "59bcc3ad6775562f845953cf01624225",
+      '...': '...',
+    }
+    //super special because we want newlines and all that jazz
+    this.packet_table_data_data = [
+      "GET / HTTP/1.1",
+      "User-Agent: Chrome/55.0.2883.87 (X11; Linux x86_64)",
+      "Host: www.google.com",
+      "Accept: */*",
+    ]
 
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
   }
@@ -36,31 +56,118 @@ class AddressBarPage extends Component {
   }
 
   _handleKeyDownandSetState (event){
-      // if animation still in progress. just return
-      if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
+    // if animation still in progress. just return
+    if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
+        //set the max state here
+        const maxAppSate = 3;
 
+        //save last state
+        const currentState = this.state.currentAppState;
+        let nextState;
+        //set the new state
         //37 is if back arrow is pressed. 39 if foward key. Add or remove state corespondingly
         if (event.keyCode === 37) {
-          this.setState({addressBarAnimation: Animations.AddressBarIn});
-          this.props.moveGlobalState('previous');
+            nextState = (currentState <= 0) ? 0 : currentState - 1;
         } else if (event.keyCode === 39) {
-          this.setState({addressBarAnimation: Animations.AddressBarOut});
-          this.props.moveGlobalState('next');
+            nextState = (currentState >= maxAppSate) ? maxAppSate : currentState + 1;
         }
+
+        console.log(`[AddressBarPage] next AppState is: ${nextState}, current Appstate is: ${currentState}`);
+
+        //based on state perform animation or animation reversal, as well as reverse animation
+        switch(nextState) {
+            case 0:
+                //this.setState(initialState);
+                // if we come back from a bigger state, reverse that bigger state animation
+                if (currentState > nextState) {
+                    console.log("Thou shalt exit this screen to previous");
+                    this.props.moveGlobalState('previous');
+                } else if (nextState > currentState) {
+                    console.error(`Cannot come from a smaller state to the 0 state. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
+                }
+                break;
+            case 1:
+                if (currentState > nextState) {
+                    //backward
+                    console.log("middle back");
+                    this.props.moveGlobalState('previous');
+                } else if (nextState > currentState) {
+                    //forward
+                    this.props.moveGlobalState('next');
+                }
+                break;
+            case 2:
+                if (currentState > nextState) {
+                    this.props.moveGlobalState('previous');
+                } else if (nextState > currentState) {
+                    //forward
+                    //http packet shown by state change to 2 already.
+                    this.setState({addressBarAnimation: Animations.AddressBarUpSome});
+                    
+                }
+                break;
+            case maxAppSate: //do final animations (if any) and move to next screen.
+                if (currentState > nextState) {
+                    console.error(`Cannot come from a bigger state to the maxAppState. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
+                } else if (nextState > currentState) {
+                    console.log("thou shalt exit screen to nexx");
+                    setTimeout(() => {     this.props.moveGlobalState('next');    }, 100);
+                    //this.props.moveGlobalState('next');
+                }
+                break;
+            default:
+                console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
+        }
+    //set the state enevtually - shitty workaround to hide the suddently appearing box in screenstate 2.
+    setTimeout(() => {     this.setState({ currentAppState: nextState});    }, 300);
   }
 
   render() {
+
+    //generate get packet:
+    var packet_table_render = [];
+    var packet_table_render_data = [];
+
+    for(var key in this.packet_table_data){
+        packet_table_render.push(
+            <tr><td><b>{key}</b></td><td>:</td><td>{this.packet_table_data[key]}</td></tr>
+        )
+    }
+    //done with the basic list, now the inner table that represents http:
+    for (var http_key in this.packet_table_data_data){
+      packet_table_render_data.push(
+        <tr><td>{this.packet_table_data_data[http_key]}</td></tr>
+      )
+    }  
+
+    //generate response packet:
+    //TODO: generate response packet.
+    
     return (
       <div>
       <div className="addressBarContainer">
         <VelocityComponent animation={this.state.addressBarAnimation}
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
-            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.phase !== 'postdns'}/>
+            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.currentAppState==this.preDNS}/>
 
         </VelocityComponent>
       </div>
-      {this.state.phase === "postdns" && 
+      
+      {this.state.currentAppState == this.packetTime &&
+        <VelocityComponent animation={this.state.addressBarAnimation}
+                           begin={(elem) => {setAnimationState(elem);}}
+                           complete={(elem) => {removeAnimationState(elem);}}>
+        <div className="centralizer">
+          <table className="httppacket">
+            {packet_table_render}
+            <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data}</td></tr>
+          </table>
+        
+        </div>
+        </VelocityComponent>
+      }
+      {this.state.currentAppState == this.postDNS && 
           <div className="centralizer">
           <div className="dnsresult">
             www.giggles.com - 42.42.42.42

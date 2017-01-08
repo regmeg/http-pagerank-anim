@@ -82,14 +82,14 @@ class DNSLookupTable extends Component {
 
   render(){
       var items = [];
-          for(var key in this.dnslist){
-              items.push(
-                  <div>
-                      <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
-                      <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
-                  </div>
-              )
-          }
+      for(var key in this.dnslist){
+          items.push(
+              <div>
+                  <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
+                  <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
+              </div>
+          )
+      }
 
       return(
         <div className="dnstable">
