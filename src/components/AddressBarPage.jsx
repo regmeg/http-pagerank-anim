@@ -69,7 +69,7 @@ class AddressBarPage extends Component {
       " <body>",
       "   <h1>Hello, World!</h1>",
       " </body>",
-      "</html>"
+      "</html>",
     ]
 
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
@@ -120,7 +120,16 @@ class AddressBarPage extends Component {
                 if (currentState > nextState) {
                     //backward
                     console.log("middle back");
-                    this.props.moveGlobalState('previous');
+                    this.setState(
+                      {
+                        addressBarAnimation: Animations.AddressBarDownSome,
+                        packetAnimation: Animations.AddressBarDownSome,
+                        showDNSResponseLine: true,
+                        showGetPacket: false,
+                        showLaptop: false,
+                        showServer: false,
+                        showResponsePacket: false,
+                      });
                 } else if (nextState > currentState) {
                     //forward
                     this.props.moveGlobalState('next');
@@ -128,7 +137,12 @@ class AddressBarPage extends Component {
                 break;
             case 2:
                 if (currentState > nextState) {
-                    this.props.moveGlobalState('previous');
+                    //backwards
+                    this.setState(
+                      {
+                        showLaptop: true,
+                        showServer: false,
+                      });
                 } else if (nextState > currentState) {
                     //forward
                     //http packet shown by state change to 2 already.
@@ -137,19 +151,47 @@ class AddressBarPage extends Component {
                         addressBarAnimation: Animations.AddressBarUpSome,
                         packetAnimation: Animations.AddressBarUpSome,
                         showGetPacket: true,
+                        showLaptop: true,
+                        showServer: false,
                       });
                     
                 }
                 break;
-            case 4:
+            case 3:
                 //show left side of the packet
                 if (currentState > nextState) {
                     //backward
+                    this.setState(
+                      {
+                        showGetPacket:true,
+                        showResponsePacket:false,
+                      });
                 } else if (nextState > currentState) {
-                    //forward                    
+                    //forward
+                    this.setState(
+                      {
+                        showLaptop: false,
+                        showServer: true,
+                      });
                 }
                 break;
-            case 5:
+            case 4:
+                //swap out responses
+                if (currentState > nextState) {
+                    //backward
+                    this.setState(
+                      {
+                        showLaptop: true,
+                        showServer: false,
+                      });
+                } else if (nextState > currentState) {
+                    //forward
+                    this.setState(
+                      {
+                        showGetPacket:false,
+                        showResponsePacket:true,
+                      });
+                }
                 break;
             case maxAppSate: //do final animations (if any) and move to next screen.
                 if (currentState > nextState) {
@@ -164,7 +206,7 @@ class AddressBarPage extends Component {
                 console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
         }
     //set the state enevtually - shitty workaround to hide the suddently appearing box in screenstate 2.
-    setTimeout(() => {     this.setState({ currentAppState: nextState});    }, 300);
+    this.setState({ currentAppState: nextState});
   }
 
   render() {
@@ -183,10 +225,24 @@ class AddressBarPage extends Component {
       packet_table_render_data.push(
         <tr><td>{this.packet_table_data_data[http_key]}</td></tr>
       )
-    }  
+    }
 
     //generate response packet:
-    //TODO: generate response packet.
+    //generate response packet:
+    var packet_table_render_response = [];
+    var packet_table_render_data_response = [];
+
+    for(var key_response in this.packet_table_data_response){
+        packet_table_render_response.push(
+            <tr><td><b>{key_response}</b></td><td>:</td><td>{this.packet_table_data_response[key_response]}</td></tr>
+        )
+    }
+    //done with the basic list, now the inner table that represents http:
+    for (var http_key_response in this.packet_table_data_response_data){
+      packet_table_render_data_response.push(
+        <tr><td>{this.packet_table_data_response_data[http_key_response]}</td></tr>
+      )
+    }
     
     return (
       <div>
@@ -211,6 +267,12 @@ class AddressBarPage extends Component {
             <table className="httppacket">
               {packet_table_render}
               <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data}</td></tr>
+            </table>
+          }
+          {this.state.showResponsePacket &&
+            <table className="httppacket">
+              {packet_table_render_response}
+              <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data_response}</td></tr>
             </table>
           }
           {this.state.showServer &&
