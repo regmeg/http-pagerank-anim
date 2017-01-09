@@ -524,6 +524,29 @@ TiggerLink : velocityHelpers.registerEffect({
     ],
   }),
 
+  jiggleGroupLeft: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-170px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+
+  jiggleGroupRight: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "170px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
 };
 
 export {Animations as default} ;

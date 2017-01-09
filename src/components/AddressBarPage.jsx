@@ -92,7 +92,7 @@ class AddressBarPage extends Component {
     // if animation still in progress. just return
     if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
         //set the max state here
-        const maxAppSate = 7;
+        const maxAppSate = 6;
 
         //save last state
         const currentState = this.state.currentAppState;
@@ -192,17 +192,6 @@ class AddressBarPage extends Component {
                     });
               
               break;
-            case 6:
-                //forward
-                this.setState(
-                  {
-                    addressBarAnimation: Animations.AddressBarDownSome,
-                    packetAnimation: Animations.AddressBarDownSome,
-                    showRendered: true,
-                    showDNSResponseLine: false,
-                  });
-              
-                break;
             case maxAppSate: //do final animations (if any) and move to next screen.
                 if (currentState > nextState) {
                     console.error(`Cannot come from a bigger state to the maxAppState. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
@@ -271,15 +260,15 @@ class AddressBarPage extends Component {
 
         </VelocityComponent>
       </div>
-      
-      
         <VelocityComponent animation={this.state.packetAnimation}
                      begin={(elem) => {setAnimationState(elem);}}
                      complete={(elem) => {removeAnimationState(elem);}}>
         <div className="centralizer">
+          <div className="imagealigner">
           {(this.state.showLaptop) &&
             <img src={laptopImg} className="leftrightimages"/>
           }
+          </div>
           {this.state.showGetPacket &&
             <table className="httppacket">
               {packet_table_render}
@@ -292,12 +281,11 @@ class AddressBarPage extends Component {
               <tr><td><b>data</b></td><td>:</td><td>{packet_table_render_data_response}</td></tr>
             </table>
           }
+          <div className="imagealigner">
           {this.state.showServer &&
             <img src={serverImg} className="leftrightimages"/>
           }
-          {this.state.showRendered &&
-            <div className="helloworld"><h1>Hello, World!</h1></div>
-          }
+          </div>
           {this.state.showDNSResponseLine && 
             <div className="centralizer">
               <div className="belowbar">
