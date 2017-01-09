@@ -24,7 +24,7 @@ class AddressBarPage extends Component {
       currentAppState: props.currentAppState,
       addressBarAnimation: Animations.AddressBarIn,
 
-      showDNSResponseLine: false,
+      showDNSResponseLine: props.currentAppState==1,
       showGetPacket: false,
       showLaptop: false,
       showServer: false,
@@ -114,6 +114,10 @@ class AddressBarPage extends Component {
                 // if we come back from a bigger state, reverse that bigger state animation
                 if (currentState > nextState) {
                     console.log("Thou shalt exit this screen to previous");
+                    this.setState(
+                      {
+                        showDNSResponseLine: false,
+                      });
                     this.props.moveGlobalState('previous');
                 } else if (nextState > currentState) {
                     console.error(`Cannot come from a smaller state to the 0 state. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
@@ -199,7 +203,14 @@ class AddressBarPage extends Component {
                     console.error(`Cannot come from a bigger state to the maxAppState. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
                 } else if (nextState > currentState) {
                     console.log("thou shalt exit screen to nexx");
-                    setTimeout(() => {     this.props.moveGlobalState('next');    }, 100);
+                    this.setState(
+                    {
+                      addressBarAnimation: Animations.AddressBarDownSome,
+                      packetAnimation: Animations.AddressBarDownSome,
+                      showRendered: true,
+                      showResponsePacket: false,
+                    });
+                   this.props.moveGlobalState('next');
                     //this.props.moveGlobalState('next');
                 }
                 break;
