@@ -265,7 +265,7 @@ class AddressBarPage extends Component {
                      complete={(elem) => {removeAnimationState(elem);}}>
         <div className="centralizer">
           <div className="imagealigner">
-          <VelocityTransitionGroup enter={{animation: "fadeIn"}} leave={{animation: "fadeOut"}}>
+          <VelocityTransitionGroup enter={{animation: "fadeIn"}}>
           {(this.state.showLaptop) &&
             <img src={laptopImg} className="leftrightimages"/>
           }
@@ -284,7 +284,7 @@ class AddressBarPage extends Component {
             </table>
           }
           <div className="imagealigner">
-          <VelocityTransitionGroup enter={{animation: "fadeIn"}} leave={{animation: "fadeOut"}}>
+          <VelocityTransitionGroup enter={{animation: "fadeIn"}} >
           {this.state.showServer &&
             <img src={serverImg} className="leftrightimages"/>
           }
