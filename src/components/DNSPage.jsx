@@ -26,7 +26,7 @@ class DNSPage extends Component {
 
   componentDidMount() {
     this.setState({tableAnimation: Animations.DNSTableIn});
-    this._dnsTable.set_searching(this.state.currentAppState==0)
+    this._dnsTable.set_searching(false, false)
   }
 
   componentWillUnmount() {
@@ -70,11 +70,11 @@ class DNSPage extends Component {
                 if (currentState > nextState) {
                     //backward
                     console.log("case1/backward");
-                    this._dnsTable.set_searching(true);
+                    this._dnsTable.set_searching(true, true);
                 } else if (nextState > currentState) {
                     //forward
                     console.log("case1/forward");
-                    this._dnsTable.set_searching(false);
+                    this._dnsTable.set_searching(false, true);
                     
                 }
                 break;

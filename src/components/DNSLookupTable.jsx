@@ -62,11 +62,11 @@ class DNSLookupTable extends Component {
     }
   }
 
-  set_searching(is_searching) {
+  set_searching(is_blinking, is_found) {
     this.setState(
       {
-        blinkmaggedon: is_searching,
-        entryFound: !is_searching
+        blinkmaggedon: is_blinking,
+        entryFound: is_found
       }
     );
   }
