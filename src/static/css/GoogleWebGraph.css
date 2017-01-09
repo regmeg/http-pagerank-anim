@@ -2,12 +2,9 @@
   position: fixed;
   width: 30px;
   height: 30px;
-
+  /*z-index: -5;*/
   border-radius: 30px;
   background-color: #4bc2f1;
-
-    left: 50%;
-    top: 300px;
 }
 
 .dot_container {
@@ -34,6 +31,70 @@
   height: 100%;
 }
 
+.searcRes{
+  background-color: #FAFAFA;
+  top: -500;
+  z-index: -5;
+  position: absolute;
+  width:200px;
+  height: 300px;
+  left:20px;
+  border: 2px solid #EBEBEB;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.searcRes > div.search {
+  background-color:white ;
+  height:  30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2),0 0 0 1px rgba(0,0,0,0.08);
+  padding-left: 5px;
+  line-height: 30px;
+  margin-top: 20px;
+}
+.searcRes > div.search > div {
+  width:82%;
+  display: inline-block;
+}
+
+.searcRes > div.list {
+  background-color: white;
+  width: 100%;
+  height:220px;
+  border-top: 1px solid #EBEBEB;
+  margin-top: 25px;
+}
+.searcRes > div.list > ul {
+  padding-top: 10px;
+}
+
+
+span.searchmin {
+  color: #4285f4;
+  cursor: pointer;
+  vertical-align: middle;
+  display: inline-block;
+  fill: currentColor;
+  height: 28px;
+  position: relative;
+  width: 28px;
+  display: inline-block;
+  right: 0;
+}
+
+div.fraction{
+  border-radius: 5px;
+  width: 140%;
+  background-color: white;
+  z-index: 1000;
+  position: fixed;
+  text-overflow: ellipsis;
+}
+
+/*~~~~~~~~~
+Animations
+~~~~~~~~~*/
 @keyframes flash {
     0% {
         background-color: Red;
@@ -55,4 +116,13 @@
   animation-duration: 1000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+}
+
+.line-flash-appear, .line-flash-enter {
+  opacity: 0.001;
+}
+
+.line-flash-appear.line-flash-appear-active,  .line-flash-enter.line-flash-enter-active{
+  opacity: 0.8;
+  transition: opacity 4s ease-out;
 }

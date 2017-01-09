@@ -5,6 +5,8 @@ import 'velocity-animate';
 import 'velocity-animate/velocity.ui';
 import { VelocityTransitionGroup, VelocityComponent, velocityHelpers } from 'velocity-react';
 import React, { Component } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Line from './Line';
 import logo from '../static/img/logo.svg';
 import '../static/css/GoogleWebGraph.css';
 import { getAnimationState, setAnimationState, removeAnimationState, forceAnimationState}  from './GlobalAppState';
@@ -12,54 +14,68 @@ import Animations from './Animations';
 import AnimatedDot from './AnimatedDot';
 
 const initialState = {
-  animation:  null,
-  renderLayout:null,
-  animateDots: false,
   currentAppState: 1,
+  renderLayout:null,
   flashAnim: null,
+  dotCss: 'dot',
+  renderLines: false,
+  linesEnterLogo: null,
+  SearchResEnter: null,
+  dotsAnimation: null,
 };
 //Define the main App component
-class GoogleWebGraph extends Component {
-
+export default class GoogleWebGraph extends Component {
 //define the constuctor of the isntance
   constructor(props) {
     super(props);
+    //define states
     this.state = initialState;
+    //define instance vars
+    this.dotsCount = 30;
+    this.animatedDots = [];
+    this.dotsHtml = [];
+    this.lines = [];
+    this.specs = [];
 
     //bind methods
     this._handleKeyDownandSetState = this._handleKeyDownandSetState.bind(this);
+
     this._exapandTheGraph = this._exapandTheGraph.bind(this);
     this._removeFlash = this._removeFlash.bind(this);
-    // this._getAllDotsAsync = this._getAllDotsAsync.bind(this);
-    // this._genaDot = this._genaDot.bind(this);
+    this._drawLines = this._drawLines.bind(this);
+    this._popSearchResults =   this._popSearchResults.bind(this);
+    this._popSearchResultsReverse =   this._popSearchResultsReverse.bind(this);
+    this._animateDotJump  = this._animateDotJump.bind(this);
+    this._hingligthDots = this._hingligthDots.bind(this);
+    this._hingligthDotsReverse = this._hingligthDotsReverse.bind(this);
+
+    this._moveFractionReverse = this._moveFractionReverse.bind(this);
+    this._moveFraction = this._moveFraction.bind(this);
   }
 
 /*
 Add listeners for the window keyEvents.
 */
   componentWillMount() {
+    //dots are generated based on a seed, so that each time randomazation is the sime
+    // reset the initial seed each time before dots are generated. Otherwise the seed will continue to be owerwritte from the latstly generaed value due to jumping between views.
+    Math.seed = 120;
     window.addEventListener('keydown', this._handleKeyDownandSetState, false);
 
-      //mplementing promise based async code - but it does not help, as javascript is not multithreaded - it just simply puts it further on the event loop and does not block next exuction.
-    // this._getAllDotsAsync();
-    // // .then( (response) => {
-    // //   if (response === 'done') {console.log('promise has been fullbilde');}
-    // //       // const _this = this;
-    // //       // _this._exapandTheGraph();
-    // //       // setTimeout(() => {     _this._removeFlash();    }, 140);
-    // //   },
-    // // );
   }
 
   //define something just after the component has rendered.
   componentDidMount() {
     this._exapandTheGraph();
-    setTimeout(() => {     this._removeFlash();    }, 140);
+    setTimeout(() => {     this._removeFlash();  }, 140);
+    setTimeout(() => {     this._drawLines();    }, 12000);
+
   }
 
 //listener have to be removed after the View component has unmounted, otherwise the state of unmounted component will be still triggered, which can break the app and throw errors.
   componentWillUnmount() {
     window.removeEventListener('keydown', this._handleKeyDownandSetState, false);
+
   }
 
 //CUstom functions
@@ -71,7 +87,7 @@ Add listeners for the window keyEvents.
         // if animation still in progress. or wrong key is pressed
         if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
           //set the max state here
-          const maxAppSate = 2;
+          const maxAppSate = 7;
           //save last state
           const currentState = this.state.currentAppState;
           let nextState;
@@ -85,6 +101,8 @@ Add listeners for the window keyEvents.
           }
 
             console.log(`next AppState is: ${nextState}, current Appstate is: ${currentState}`);
+            //set the state eventually
+             this.setState({ currentAppState: nextState});
 
             //based on state perform animation or animation reversal, as well as reverse animation
             switch(nextState) {
@@ -100,30 +118,81 @@ Add listeners for the window keyEvents.
                      }
                      break;
 
-                  case 1: // "Server spawned"
+
+                  case 1: // Initail graph animation has finished
                          // if we come back from a bigger state, reverse that bigger state animation
                          if (currentState > nextState) {
-                          // this._spwanServer_reverse();
+                          this._popSearchResultsReverse();
                            //if we come from a smaller state, apply the animation of this state
-                         } else if (nextState > currentState) {
+                         } else if (nextState > currentState) {//wont get here, as at state zero reverse is going to happen, this state is not going to be set.
                            // this._spwanServer_reverse();
                          }
                        break;
 
+                       case 2: // Search results enter
+                              // if we come back from a bigger state, reverse that bigger state animation
+                              if (currentState > nextState) {
+                                this._animateDotJumpReverse(); //animate set reverse and get to state 1
+                                //if we come from a smaller state, apply the animation of this state
+                              } else if (nextState > currentState) {
+                                this._popSearchResults();
+                              }
+                            break;
+
+                       case 3: // Jump around Dots
+                              // if we come back from a bigger state, reverse that bigger state animation
+                              if (currentState > nextState) {
+                                this._hingligthDotsReverse();
+                               // this._spwanServer_reverse();
+                                //if we come from a smaller state, apply the animation of this state
+                              } else if (nextState > currentState) {
+                                this._animateDotJump();
+                              }
+                            break;
+
+                            case 4: // Jump around Dots
+                                   // if we come back from a bigger state, reverse that bigger state animation
+                                   if (currentState > nextState) {
+                                     this._moveFractionReverse();
+                                     //if we come from a smaller state, apply the animation of this state
+                                   } else if (nextState > currentState) {
+                                     this._hingligthDots();
+                                   }
+                                 break;
+                           case 5: // Move fraction to the search result list
+                                  // if we come back from a bigger state, reverse that bigger state animation
+                                  if (currentState > nextState) {
+                                   this._changeFractionToLinkReverse();
+                                    //if we come from a smaller state, apply the animation of this state
+                                  } else if (nextState > currentState) {
+                                    this._moveFraction();
+                                  }
+                                break;
+                                case 6: // Move fraction to the search result list
+                                       // if we come back from a bigger state, reverse that bigger state animation
+                                       if (currentState > nextState) {
+                                        // this._spwanServer_reverse();
+                                         //if we come from a smaller state, apply the animation of this state
+                                       } else if (nextState > currentState) {
+                                         this._changeFractionToLink();
+                                       }
+                                     break;
+
                 case maxAppSate: //trigger last animation and fire next state
                         // if we come back from a bigger state, reverse that bigger state animation
+
                         if (currentState > nextState) {
                           console.error(`Cannot come from a bigger state to the maxAppState. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
                         } else if (nextState > currentState) {
+                          this._exitSearchResults();
                           // move to the next view
-                          this.props.moveGlobalState('next');
+                          setTimeout(() => {     this.props.moveGlobalState('next');    }, 500);
                         }
                         break;
                  default:
                      console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
        }
-        //set the state eventually
-         this.setState({ currentAppState: nextState});
+
   }
 
   /***************************************************************************************
@@ -134,39 +203,101 @@ Add listeners for the window keyEvents.
   //Fcunctions for triggering animation and reverses
   ****************************************************************************************/
   _exapandTheGraph() {
-    console.log('expandingGrahp');
-    this.setState({ renderLayout: true });
+    this.setState({ renderLayout: true, dotsAnimation: 'initial-animation' });
   }
 
   _removeFlash() {
-    console.log('removing flash bg');
+    //console.log('removing flash bg');
     this.setState({ flashAnim: Animations.BackgroundFlash });
   }
-  /***************************************************************************************
-  //Fcunctions for tgenerating dots
-  ****************************************************************************************/
-  // async _getAllDotsAsync() {
-  //   for (let i = 0; i < dotsCount; i+=1) {
-  //      const dot = await (<AnimatedDot animateDots={this.state.renderLayout} id={i} key={i}/>);
-  //      dotsHtml.push(dot);
-  //
-  //   }
-  // }
-  //
-  // async _genaDot (i) {
-  //   const dot = await (<AnimatedDot animateDots={this.state.renderLayout} id={i} key={i}/>);
-  //   return dot;
-  // }
+
+  _drawLines() {
+    //get specsStart
+    for (let i = 0; i < this.dotsCount; i+=1) {
+      this.specs.push(this.animatedDots[i].getBoundingClientRect());
+    }
+    //generate lines
+      for (let i = 0; i < this.dotsCount; i+=1) {
+      const dotStart = this.animatedDots[i];
+      const specsStart = this.specs[i];
+          for (let j = i+1; j < this.dotsCount; j+=1) {
+            const dotFinish = this.animatedDots[j];
+            const specsFinish = this.specs[j];
+            const key = `${this.props.keyString}_line_${i}_${j}`;
+            this.lines.push(<Line animation={this.state.linesEnterLogo} key={key} from={{x:specsStart.right-(specsStart.width/2),y:specsStart.bottom-(specsStart.width/2)}} to={{x:specsFinish.right-(specsStart.width/2),y:specsFinish.bottom-(specsStart.width/2)}}/>);
+
+          }
+      }
+
+      this.setState({ linesRen: this.lines });
+
+  }
+
+  _popSearchResults() {
+        this.setState({ SearchResEnter: Animations.SearchResEnter});
+  }
+
+  _popSearchResultsReverse() {
+        this.setState({ SearchResEnter: 'reverse'});
+  }
+
+  _animateDotJump() {
+      this.setState({dotsAnimation: 'jump-dots'});
+  }
+  _animateDotJumpReverse()
+  {
+    this.setState({dotsAnimation: 'nothin'});
+    this._popSearchResultsReverse();
+    this.setState({ currentAppState: 1});
+  }
+
+
+  _hingligthDots() {
+    this.setState({dotsAnimation: 'highlight-dots'});
+  }
+
+  _hingligthDotsReverse() {
+    this.setState({ dotsAnimation: 'reverse-highlight'});
+  }
+
+  _moveFraction() {
+    //console.log('moving fraction');
+    this.setState({dotsAnimation: 'move-fraction'});
+  }
+
+  _moveFractionReverse() {
+    //console.log('reversing fraction');
+   this.setState({dotsAnimation: 'reverse-move-fraction'});
+  }
+
+  _changeFractionToLink() {
+    //console.log('moving fraction');
+    this.setState({dotsAnimation: 'fraction-to-links'});
+  }
+  _changeFractionToLinkReverse() {
+    //console.log('moving fraction');
+    this.setState({dotsAnimation: 'reverse-fraction-to-links'});
+  }
+
+  _exitSearchResults() {
+        this.setState({ SearchResEnter: Animations.existSearchRes,
+                        dotsAnimation: 'exit-fraction-links'});
+  }
+
+
 
  //Render everying
   render() {
     //Animations
     const containerAnim = this.state.renderLayout ? Animations.DotscontainerAnimation : null;
+    //const containerAnim = null;
     //and generate dots
-    const dotsCount = 30;
+    const _this = this;
     const dotsHtml = [];
-    for (let i = 0; i < dotsCount; i+=1) {
-      dotsHtml.push(<AnimatedDot animateDots={this.state.renderLayout} id={i} key={i}/>);
+                      // {renderLines ? {this.lines: null }
+    for (let i = 0; i < this.dotsCount; i+=1) {
+      const key = `${this.props.keyString}_dot_${i}`;
+      dotsHtml.push(<AnimatedDot dotsAnimation={this.state.dotsAnimation} dotCss={this.state.dotCss} that={_this} id={i} key={key}/>);
     }
     return (
               <VelocityComponent animation={containerAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}}>
@@ -174,8 +305,31 @@ Add listeners for the window keyEvents.
                   <VelocityComponent animation={this.state.flashAnim} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}}>
                   <div  className="flash_container flash"/>
                   </VelocityComponent>
-                  {dotsHtml}
-                </div>
+                  <ReactCSSTransitionGroup
+                    transitionName="line-flash"
+                    transitionAppear
+                    transitionAppearTimeout={800}
+                    transitionEnter
+                    transitionEnterTimeout={800}
+                    transitionLeave
+                    transitionLeaveTimeout={300}>
+                      {this.state.linesRen}
+                      {dotsHtml}
+                   </ReactCSSTransitionGroup>
+                   <VelocityComponent animation={this.state.SearchResEnter} begin={(elem) => {setAnimationState(elem);}}  complete={(elem) => {removeAnimationState(elem);}} >
+                     <div className="searcRes">
+                       <div className="search">
+                         <div>{this.props.searchTerm}</div><span className="searchmin"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span>
+                       </div>
+                       <div className="list">
+                         <ul>
+                           {/*<li>{'item 1'}</li>
+                         <li>{'item 2'}</li>*/}
+                        </ul>
+                      </div>
+                    </div>
+                   </VelocityComponent>
+                 </div>
               </VelocityComponent>
     );
   }
@@ -183,10 +337,11 @@ Add listeners for the window keyEvents.
 //define propTypes
 GoogleWebGraph.propTypes = {
   moveGlobalState: React.PropTypes.func,
+  searchTerm: React.PropTypes.string,
+  keyString:  React.PropTypes.string.isRequired,
 };
 
 GoogleWebGraph.defaultProps = {
   moveGlobalState: null,
+  searchTerm: 'how to pass in CS',
 };
-
-export default GoogleWebGraph;
