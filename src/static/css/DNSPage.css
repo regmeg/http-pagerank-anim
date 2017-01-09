@@ -1,6 +1,7 @@
 .dnstable {
-  float:right;
-  margin-top: 20%;
+  position:absolute;
+  right:0px;
+  top:200px;
   padding: 10px;
   border-radius: 10px 10px 10px 10px;
   border: 2px solid #000000;
