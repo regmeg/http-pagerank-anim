@@ -19,7 +19,7 @@ class DNSLookupTable extends Component {
       'www.soton.ac.uk': '152.78.118.51',
       'whatweekisit.soton.ac.uk': '152.78.129.43',
       'imgur.com': '151.101.60.193',
-      'www.giggles.com': '42.42.42.42',
+      'www.google.co.uk': '74.125.206.94',
     };
 
     this._getVisibilityArray = this._getVisibilityArray.bind(this);
@@ -42,7 +42,7 @@ class DNSLookupTable extends Component {
       'www.soton.ac.uk': 'invisible',
       'whatweekisit.soton.ac.uk': 'invisible',
       'imgur.com': 'invisible',
-      'www.giggles.com': 'invisible',
+      'www.google.co.uk': 'invisible',
     };
 
     var key_at_element = Object.keys(visibility)[index];
@@ -78,7 +78,7 @@ class DNSLookupTable extends Component {
           items.push(
               <div>
                   <span id={key} className={this.state.visibilityClassNames[key]}>➜</span>
-                  <span className={this.state.blinkmaggedon && key === "www.giggles.com" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
+                  <span className={this.state.blinkmaggedon && key === "www.google.co.uk" ? 'blink' : null}>{key} - {this.dnslist[key]}</span>
               </div>
           )
       }
@@ -87,7 +87,7 @@ class DNSLookupTable extends Component {
         <div className="dnstable">
           {!this.state.entryFound ? items.map(function(lis){return (lis);}) :
           <div>
-            <span>www.giggles.com - 42.42.42.42</span>
+            <span>www.google.co.uk - 74.125.206.94</span>
           </div>
           }
         </div>

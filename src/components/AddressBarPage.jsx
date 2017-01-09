@@ -37,7 +37,7 @@ class AddressBarPage extends Component {
 
     this.packet_table_data = {
       'source': "12.34.56.78",
-      'destination': "42.42.42.42",
+      'destination': "74.125.206.94",
       'sequence number': "1",
       'checksum': "59bcc3ad6775562f845953cf01624225",
       '...': '...',
@@ -46,13 +46,13 @@ class AddressBarPage extends Component {
     this.packet_table_data_data = [
       "GET / HTTP/1.1",
       "User-Agent: Chrome/55.0.2883.87 (X11; Linux x86_64)",
-      "Host: www.google.com",
+      "Host: www.google.co.uk",
       "Accept: */*",
     ]
 
 
     this.packet_table_data_response = {
-      'source': "42.42.42.42",
+      'source': "74.125.206.94",
       'destination': "12.34.56.78",
       'sequence number': "1",
       'checksum': "12.34.56.78",
@@ -262,7 +262,7 @@ class AddressBarPage extends Component {
         <VelocityComponent animation={this.state.addressBarAnimation}
                            begin={(elem) => {setAnimationState(elem);}}
                            complete={(elem) => {removeAnimationState(elem);}}>
-            <AddressBar text="https://www.giggles.com/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.animateTextBox}/>
+            <AddressBar text="https://www.google.co.uk/" animationClassName={this.state.addressBarAnimationClass} withAnimation={this.state.animateTextBox}/>
 
         </VelocityComponent>
       </div>
@@ -296,7 +296,7 @@ class AddressBarPage extends Component {
           {this.state.showDNSResponseLine && 
             <div className="centralizer">
               <div className="belowbar">
-                www.giggles.com - 42.42.42.42
+                www.google.co.uk - 74.125.206.94
               </div>
             </div>
           }
