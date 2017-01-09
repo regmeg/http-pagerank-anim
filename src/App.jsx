@@ -102,8 +102,15 @@ class App extends Component {
                    break;
               case 2:
                    // if we come back from a bigger state, set the initial view
-                      this.setState({
+                   if (currentState > nextState) {
+                     //backwards
+                     this.setState({
                        currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={6}/>,});
+                   } else if (nextState > currentState) {
+                    //forwards
+                      this.setState({
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={1}/>,});
+                   }
                    break;
               case 3:
                    //forceAnimationState(true);
