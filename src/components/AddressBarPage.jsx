@@ -148,6 +148,7 @@ class AddressBarPage extends Component {
                         showGetPacket: true,
                         showLaptop: true,
                         showServer: false,
+                        showDNSResponseLine: false,
                       });
                     
                 
@@ -161,6 +162,7 @@ class AddressBarPage extends Component {
                         showGetPacket: true,
                         showLaptop: false,
                         showServer: true,
+                        showDNSResponseLine: false,
                       });
                 
                 break;
@@ -173,6 +175,7 @@ class AddressBarPage extends Component {
                         showResponsePacket: true,
                         showLaptop: false,
                         showServer: true,
+                        showDNSResponseLine: false,
                       });
                 
                 break;
@@ -185,6 +188,7 @@ class AddressBarPage extends Component {
                       showResponsePacket: true,
                       showLaptop: true,
                       showServer: false,
+                      showDNSResponseLine: false,
                     });
               
               break;
@@ -195,6 +199,7 @@ class AddressBarPage extends Component {
                     addressBarAnimation: Animations.AddressBarDownSome,
                     packetAnimation: Animations.AddressBarDownSome,
                     showRendered: true,
+                    showDNSResponseLine: false,
                   });
               
                 break;
