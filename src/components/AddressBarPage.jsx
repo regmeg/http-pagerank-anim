@@ -18,19 +18,22 @@ import { getAnimationState, setAnimationState, removeAnimationState, forceAnimat
 class AddressBarPage extends Component {
 
   constructor(props) {
-
     super(props);
-    this.state = {
+
+    this.initialState = {
       currentAppState: props.currentAppState,
       addressBarAnimation: Animations.AddressBarIn,
 
-      showDNSResponseLine: props.currentAppState==1,
+      showDNSResponseLine: false,
       showGetPacket: false,
       showLaptop: false,
       showServer: false,
       showResponsePacket: false,
+      showRendered: false,
       animateTextBox: props.currentAppState==0,
     };
+
+    this.state = this.initialState;
 
     this.packet_table_data = {
       'source': "12.34.56.78",
@@ -89,7 +92,7 @@ class AddressBarPage extends Component {
     // if animation still in progress. just return
     if (getAnimationState() === false || (event.keyCode !== 37 && event.keyCode !== 39)) return;
         //set the max state here
-        const maxAppSate = 5;
+        const maxAppSate = 7;
 
         //save last state
         const currentState = this.state.currentAppState;
@@ -105,9 +108,9 @@ class AddressBarPage extends Component {
         console.log(`[AddressBarPage] next AppState is: ${nextState}, current Appstate is: ${currentState}`);
 
         //based on state perform animation or animation reversal, as well as reverse animation
+        this.setState(this.initialState);
         switch(nextState) {
             case 0:
-                //this.setState(initialState);
                 // if we come back from a bigger state, reverse that bigger state animation
                 if (currentState > nextState) {
                     console.log("Thou shalt exit this screen to previous");
@@ -125,10 +128,6 @@ class AddressBarPage extends Component {
                         addressBarAnimation: Animations.AddressBarDownSome,
                         packetAnimation: Animations.AddressBarDownSome,
                         showDNSResponseLine: true,
-                        showGetPacket: false,
-                        showLaptop: false,
-                        showServer: false,
-                        showResponsePacket: false,
                       });
                 } else if (nextState > currentState) {
                     //forward
@@ -136,15 +135,7 @@ class AddressBarPage extends Component {
                 }
                 break;
             case 2:
-                if (currentState > nextState) {
-                    //backwards
-                    this.setState(
-                      {
-                        showLaptop: true,
-                        showServer: false,
-                      });
-                } else if (nextState > currentState) {
-                    //forward
+
                     //http packet shown by state change to 2 already.
                     this.setState(
                       {
@@ -155,43 +146,53 @@ class AddressBarPage extends Component {
                         showServer: false,
                       });
                     
-                }
+                
                 break;
             case 3:
-                //show left side of the packet
-                if (currentState > nextState) {
-                    //backward
+
                     this.setState(
                       {
-                        showGetPacket:true,
-                        showResponsePacket:false,
-                      });
-                } else if (nextState > currentState) {
-                    //forward
-                    this.setState(
-                      {
+                        addressBarAnimation: Animations.AddressBarUpSome,
+                        packetAnimation: Animations.AddressBarUpSome,
+                        showGetPacket: true,
                         showLaptop: false,
                         showServer: true,
                       });
-                }
+                
                 break;
             case 4:
-                //swap out responses
-                if (currentState > nextState) {
-                    //backward
+
                     this.setState(
                       {
-                        showLaptop: true,
-                        showServer: false,
+                        addressBarAnimation: Animations.AddressBarUpSome,
+                        packetAnimation: Animations.AddressBarUpSome,
+                        showResponsePacket: true,
+                        showLaptop: false,
+                        showServer: true,
                       });
-                } else if (nextState > currentState) {
-                    //forward
-                    this.setState(
-                      {
-                        showGetPacket:false,
-                        showResponsePacket:true,
-                      });
-                }
+                
+                break;
+            case 5:
+                  //forward
+                  this.setState(
+                    {
+                      addressBarAnimation: Animations.AddressBarUpSome,
+                      packetAnimation: Animations.AddressBarUpSome,
+                      showResponsePacket: true,
+                      showLaptop: true,
+                      showServer: false,
+                    });
+              
+              break;
+            case 6:
+                //forward
+                this.setState(
+                  {
+                    addressBarAnimation: Animations.AddressBarDownSome,
+                    packetAnimation: Animations.AddressBarDownSome,
+                    showRendered: true,
+                  });
+              
                 break;
             case maxAppSate: //do final animations (if any) and move to next screen.
                 if (currentState > nextState) {
@@ -278,16 +279,20 @@ class AddressBarPage extends Component {
           {this.state.showServer &&
             <img src={serverImg} className="leftrightimages"/>
           }
+          {this.state.showRendered &&
+            <div className="helloworld"><h1>Hello, World!</h1></div>
+          }
+          {this.state.showDNSResponseLine && 
+            <div className="centralizer">
+              <div className="belowbar">
+                www.giggles.com - 42.42.42.42
+              </div>
+            </div>
+          }
         </div>
       </VelocityComponent>
       
-      {this.state.showDNSResponseLine && 
-        <div className="centralizer">
-          <div className="dnsresult">
-            www.giggles.com - 42.42.42.42
-          </div>
-        </div>
-      }
+      
 
       
       </div>
