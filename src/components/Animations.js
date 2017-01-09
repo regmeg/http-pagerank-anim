@@ -189,9 +189,9 @@ const Animations = {
       }, 1, {
         easing: 'ease-out',
         //delay: delay*450,
-      }],
-    ],
-  }),
+     }],
+   ],
+ }),
 
   existSearchRes: velocityHelpers.registerEffect({
    defaultDuration: 650,
@@ -289,8 +289,8 @@ TiggerLink : velocityHelpers.registerEffect({
       }, 1, {
         easing: 'spring',
         loop: 2,
-      }],
-    ],
+     }],
+   ],
   }),
 
   TiggerLinkLeft : velocityHelpers.registerEffect({
@@ -457,6 +457,72 @@ TiggerLink : velocityHelpers.registerEffect({
               }],
             ],
           }),
+
+  AddressBarDownSome: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateY: "0px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  AddressBarOut: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-3000px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  AddressBarUpSome: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateY: "-200px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  AddressBarIn: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-512px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  DNSTableIn: velocityHelpers.registerEffect({
+    defaultDuration: 400,
+    calls: [
+      [{
+        translateX: "-70px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
+
+  DNSTableOut: velocityHelpers.registerEffect({
+    defaultDuration: 250,
+    calls: [
+      [{
+        translateX: "-3000px",
+      }, 1, {
+        easing: 'ease-in-out',
+      }],
+    ],
+  }),
 
 };
 

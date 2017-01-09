@@ -1,0 +1,52 @@
+input {
+    background-color: transparent;
+    border: 0px solid;
+}
+
+td {
+  vertical-align: top;
+}
+
+.addressbar {
+  background: url("../img/address_bar.png");
+  background-repeat: no-repeat;
+  width:300%;
+  padding-left:120px;
+  padding-top:6px;
+  padding-bottom:5px;
+  position: absolute;
+  top: 40%;  
+  left:50%;
+}
+
+.belowbar {
+  margin-top:40%;
+  padding: 10px;
+  border-radius: 10px 10px 10px 10px;
+  border: 2px solid #000000;
+  display: inline-block;
+}
+
+.helloworld {
+  margin-top:40%;
+  padding: 10px;
+  display: inline-block;
+}
+
+.httppacket {
+  margin-top:40%;
+  padding: 10px;
+  border-radius: 10px 10px 10px 10px;
+  border: 2px solid #000000;
+  display: inline-block;
+}
+
+.centralizer  {
+  text-align: center;
+}
+
+.leftrightimages {
+  margin: 10px;
+  width: 150;
+  height: 150;
+}

@@ -7,6 +7,8 @@ import { VelocityTransitionGroup, VelocityComponent } from 'velocity-react';
 import React, { Component } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Animations from './components/Animations';
+import AddressBarPage from './components/AddressBarPage';
+import DNSPage from './components/DNSPage';
 import GoogleHome from './components/GoogleHome';
 import GoogleWebGraph from './components/GoogleWebGraph';
 import GoogleSearchResults from './components/GoogleSearchResults';
@@ -21,7 +23,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      maxAppSate: 2,
+      maxAppSate: 5,
       currentGloabalState: 0,
       localTimesAccesedCntr:null,
       currentView: null,
@@ -39,8 +41,8 @@ class App extends Component {
     const TimesAccesedCntr = new Array(this.state.maxAppSate + 1);
     TimesAccesedCntr.fill(0);
     this.setState({
-      currentView:<GoogleHome key={'GoogleHome'} saveSearch={this._saveSearch} moveGlobalState = {this._handleGlobalStateChange} />,
-    localTimesAccesedCntr: TimesAccesedCntr,
+      localTimesAccesedCntr: TimesAccesedCntr,
+      currentView:<AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,
     });
   }
 
@@ -58,6 +60,7 @@ class App extends Component {
         //set the max state here
         const maxAppSate = this.state.maxAppSate;
         const localTimesAccesedCntr = this.state.localTimesAccesedCntr;
+
         //save last state
         const currentState = this.state.currentGloabalState;
         let nextState;
@@ -70,26 +73,48 @@ class App extends Component {
             nextState = (currentState >= maxAppSate) ? maxAppSate : currentState + 1;
         }
 
+          console.log(`[APP] next GlobalState is: ${nextState}, current GlobalState is: ${currentState}`);
 
-          console.log(`next GlobalState is: ${nextState}, current GlobalState is: ${currentState}`);
           //based on state decide which view to generate
           switch(nextState) {
-
                case 0:
-                   //forceAnimationState(true);
-                   key = 'GoogleHome';
                    // if we come back from a bigger state, set the initial view
                    if (currentState > nextState) {
                      this.setState({
-                       currentView: <GoogleHome key={key}  saveSearch={this._saveSearch} moveGlobalState = {this._handleGlobalStateChange} />,
-                     //tranistionName: "",
-                   });
+                      //backwards
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
                      //if we come from a smaller state, it is a bug, log an error.
                    } else if (nextState > currentState) {
                       console.error(`Cannot come from a smaller state to the 0 state. next GlobalState is: ${nextState}, current GlobalState is : ${currentState}`);
                    }
                    break;
-            case 1:
+              case 1:
+                   // if we come back from a bigger state, set the initial view
+                   if (currentState > nextState) {
+                      //backwards
+                     this.setState({
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={1}/>,});
+                   } else if (nextState > currentState) {
+                      //forwards
+                      this.setState({
+                       currentView: <DNSPage key={'DNSPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={0}/>,});
+                   }
+                   break;
+              case 2:
+                   // if we come back from a bigger state, set the initial view
+                      this.setState({
+                       currentView: <AddressBarPage key={'AddressBarPage'} moveGlobalState = {this._handleGlobalStateChange} currentAppState={6}/>,});
+                   break;
+              case 3:
+                   //forceAnimationState(true);
+                   console.log("do you even home, bro?");
+                   key = 'GoogleHome';
+                    this.setState({
+                       currentView: <GoogleHome key={key}  saveSearch={this._saveSearch} moveGlobalState = {this._handleGlobalStateChange} />,
+                     //tranistionName: "",
+                   });
+                  break;
+            case 4:
                        //forceAnimationState(true);
                        key =  `GoogleWebGraph_${localTimesAccesedCntr[nextState]}`;
                        this.setState({
@@ -97,7 +122,7 @@ class App extends Component {
                          //tranistionName: "",
                        });
                      break;
-              case maxAppSate:
+            case maxAppSate:
                       key = 'GoogleSearchResults';
                       //if we come from a bigger state, it is a bug, log an error.
                       if (currentState > nextState) {
@@ -112,7 +137,7 @@ class App extends Component {
                       }
                       break;
                default:
-                   console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
+console.error(`Unknown currentAppState has been triggered, next AppState is: ${nextState}, current Appstate is :${currentState}`);
      }
 
      //update the state iteself

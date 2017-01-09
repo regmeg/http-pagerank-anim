@@ -112,6 +112,10 @@ export default class GoogleHome extends Component {
                      // if we come back from a bigger state, reverse that bigger state animation
                      if (currentState > nextState) {
                        this._triggerSearchReverse();
+                       setTimeout(() => {     
+                        forceAnimationState(true);
+                        this.props.moveGlobalState('previous');
+                      }, 100);
                        //if we come from a smaller state, it is a bug, log an error.
                      } else if (nextState > currentState) {
                         console.error(`Cannot come from a smaller state to the 0 state. next AppState is: ${nextState}, current Appstate is : ${currentState}`);
