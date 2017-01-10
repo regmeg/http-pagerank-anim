@@ -1,5 +1,8 @@
 # js_animation
-Animated browser presentation project  done in  React and Velocity.js
+Animated browser presentation project  done in  React and Velocity.js, [available on github](https://github.com/rihardsbar/js_animation)
+
+##Pre-reqs
+Nodejs and surrounding environment are set up and ready to install packages via npm, highly recommended: [nvm](https://github.com/creationix/nvm) to manage different versions of node.
 
 ##Usage
 cd into src/ and install the dependencies
