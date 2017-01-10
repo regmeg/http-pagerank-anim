@@ -1,5 +1,8 @@
 # js_animation
-Animated browser presentation project  done in  React and Velocity.js
+Animated browser presentation project  done in  React and Velocity.js, [available on github](https://github.com/rihardsbar/js_animation)
+
+##Pre-reqs
+Nodejs and surrounding environment are set up and ready to install packages via npm, highly recommended: [nvm](https://github.com/creationix/nvm) to manage different versions of node.
 
 ##Usage
 cd into src/ and install the dependencies
@@ -9,6 +12,9 @@ then launch the application
 .
 
 This launches the webpack module bundler dev server, which is configured to to firstly lint and then transpile JSX and ES6, and bundle them together in the hot mode. Thereby dev can be done without refreshing browser and loosing states to see the updates. In order to see the live application, refer to the localhost:port address that webpack-dev-server provides.
+
+## Caveats / Limitations
+This application was designed and tested for the resolution of one particular projector - `1024x768`. It **will** misbehave at other resolutions. This limitation has reduced development time and and already steep learning curve significantly.
 
 ##Some further reading
 Using Velocity with React.js
