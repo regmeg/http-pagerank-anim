@@ -1,0 +1,39 @@
+Intro:
+
+When Sir Tim Burners Lee first outlined the concepts behind the World Wide Web, he outlined them as a dream - one where all of human knowledge could be interconnected and consistently updated. A lot has changed since then, but the dream remains in it's essence. Let's start with where users regularly start.
+
+
+
+Address Bar:
+
+You probably already know how to search and/or type where you want to go in the address bar to access your favourite websites. This animation in the form of a React/JavaScript application will give you a brief overview of the things that go on under the hood when you perform these tasks.
+
+Naturally first thing you'll notice is the "https" - this describes the protocol, in this case HyperText Transfer Protocol, over a secure channel. The next part (from www. to .uk), is the host (or server) from which you need to retrieve content. Finally, the ending '/' - or anything after it - is used to tell that server which document you'd like. Rihards will elaborate on this.
+
+
+
+DNS Page:
+
+The first thing your browser does is send a request to a DNS server, which will translate the host name in to an IP Address which is used for making sure your packets get where they need to be. The DNS server's response contains this IP address.
+
+
+
+Address Bar:
+
+- your browser now uses the DNS address to formulate a request packet to the server at www.google.co.uk
+- HTML is a markup language, which means it can be used to declare the layout of items on a page, in the example provided you can see that the data is "Hello World" and it's in a large (H1) style. Markup can be used for far more advanced things such as linking, image embedding and to declare just about everything that makes up the internet.
+- packets contain all the data required to get the it to the final destination across the internet and to allow the recipient to reply. It contains things like the source address, destination address, ordering data, error checking data and the actual payload, in this case, HTML-in-HTTP
+- This request is received by the server which then decodes the request and responds with the appropriate data along with the HTML (Hyper Text Markup Language) data
+- Once received by your computer, this data is used to render the data sent back by the server.
+
+
+
+Google Home Page:
+
+google.co.uk is just one example of the websites and applications the web connects you to, the whole idea (as outlined by TBL) is that it is built in a generic enough manner to allow for limitless possibilities (all of human knowledge). What started as a fairly small system has expanded rapidly to become pervasive in our daily lives.
+
+As countless informal sources on the internet (redditors) say: "I possess a device, in my pocket, that is capable of accessing the entirety of information known to man. I use it to look at pictures of cats and get in arguments with strangers."
+
+[https://as.reddit.com/r/AskReddit/comments/15yaap/if_someone_from_the_1950s_suddenly_appeared_today/c7qyp13/]
+
+Perhaps TBL's dream has come true. On to Rihards.
