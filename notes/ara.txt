@@ -21,8 +21,8 @@ The first thing your browser does is send a request to a DNS server, which will 
 Address Bar:
 
 - your browser now uses the DNS address to formulate a request packet to the server at www.google.co.uk
-- packets contain all the data required to get the it to the final destination across the internet and to allow the recipient to reply. It contains things like the source address, destination address, ordering data, error checking data and the actual payload, in this case, HTML-in-HTTP
 - HTML is a markup language, which means it can be used to declare the layout of items on a page, in the example provided you can see that the data is "Hello World" and it's in a large (H1) style. Markup can be used for far more advanced things such as linking, image embedding and to declare just about everything that makes up the internet.
+- packets contain all the data required to get the it to the final destination across the internet and to allow the recipient to reply. It contains things like the source address, destination address, ordering data, error checking data and the actual payload, in this case, HTML-in-HTTP
 - This request is received by the server which then decodes the request and responds with the appropriate data along with the HTML (Hyper Text Markup Language) data
 - Once received by your computer, this data is used to render the data sent back by the server.
 
