@@ -1,0 +1,44 @@
+[Google Home View]
+So earlier we have requested the google home page, which has sent us back a response within a packet with HTML inside.
+This HTML code is rendered by the browser, as result, we see this lovely google home as results.
+Let's investigate what happens when try to search something on google.
+Let's assume we are desperate computer science students, who try to pass a module.
+So we search for a term "how to pass in CS".
+Once we enter the search term and click the search button, we actually generate another request to the server within a packet.
+So as you can see here we a packet, which is all fired up and ready to go.
+And here on the right side, we have our google server, which we are sending the request to.
+Same, as with the previous case,  HTTP protocol is used to communicate between the server and client.
+Once we fire up the packet, we reach the server.
+
+[Web Graph View]
+On the google server, we reach a thing called web graph, which consists of all the websites on the internet.
+Web graph indicates how all the websites on the internet are interconnected with each other. 
+Each of circle on the screen represents a website and each line represents a link between them.
+Google search uses an algorithm called PageRank in order to calculate the search results for the user.
+The PageRank algorithm was written by Larry Page and Sergey Brin back in 1996 at Stanford University as part of a research project. This alrgorithm eventually made one of the richest people in the world.
+So, the PageRank algorithm jumps around the webgraph in order to determine which websites are more important than the other on the web.
+Each website is given a numerical coefficient, which determines its importance. This coefficient is calculated by taking into account how many other sites link to a particular website and how important are these sites which link to it.
+In this graph the size of the circle indicates how important the each website actually is according to PageRank.
+In our case, these particular websites match our search term. 
+Once matching websites are found, they are ordered in accordance with their ranking.
+So each of these numbers correspond to a website which we might find relevant to what we have searched for.
+In our case, we get results as youtube, quora, commercafe and others.
+Once google server composes a list of search results, it gets sent back to us to our browser window.
+
+[Search Results View]
+Each of the search results in the browser is actually a link which corresponds.
+A Link is an element which points to a website within a webgraph, which we have seen earlier.
+A Link within a webpage in an embedded hypertext element, which is performs a redirection to the destination action in the browser once it is clicked.
+Quite often links can be broken, which means that they point to some destination that does not exist. That a big drawback of the HTTP system, which has been criticised ever since it's invention by Tim Berners-Lee.
+Once we click any of these links, we send another request to a corresponding server, which contains the website data that we are interested int.
+As it can be seen in the top, links quite often consist of many parts. 
+The first part is the website URL that Ara has spoken earlier.
+Another parts include a pointer identifier to some resource within that particular website.
+Quite frequently these resources on the server don't actually exist, but are generated on the fly, once are requested.
+One of these resources are virtual documents, which are webpages which are put together on the server, when the necessary parameters within the link are provided.
+On the, contratry to static documents, like a typical pdf or word document, the HTML webpages that are dynicamally on the server are not stored there permanently.
+In this case we generate an article, content for which is taken out of the database, after we have provided parameters through the link for that article to be generated.
+As result, we get a reassuring article, which can potentially calm down many computer science students out there, who get afraid of a thought of failing their course.
+
+[Conclusion]
+The invention of the page rank algorithm and the google search engine would have been not possible without invention the world wide web itself. Google proves that web is a really powerful tool if used for the right reason by clever people. These are truly amazing times to live through, as web innovation is far from being saturated and there certainly many great new things to come. And who knows, maybe some of you kids might be the next web innovation rock stars. Thank you for your attention.
