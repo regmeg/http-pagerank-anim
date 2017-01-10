@@ -13,6 +13,9 @@ then launch the application
 
 This launches the webpack module bundler dev server, which is configured to to firstly lint and then transpile JSX and ES6, and bundle them together in the hot mode. Thereby dev can be done without refreshing browser and loosing states to see the updates. In order to see the live application, refer to the localhost:port address that webpack-dev-server provides.
 
+## Caveats / Limitations
+This application was designed and tested for the resolution of one particular projector - `1024x768`. It *will* misbehave at other resolutions. This limitation has reduced development time and and already steep learning curve significantly.
+
 ##Some further reading
 Using Velocity with React.js
 [https://www.npmjs.com/package/velocity-react]
