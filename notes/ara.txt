@@ -1,0 +1,27 @@
+Intro:
+
+When Sir Tim Burners Lee first outlined the concepts behind the World Wide Web, he outlined them as a dream - one where all of human knowledge could be interconnected and consistently updated. A lot has changed since then, but the dream remains in it's essence. Let's start with where users regularly start.
+
+Address Bar:
+
+You probably already know how to search and/or type in an address in to an address bar and go to your favourite websites. This animation in the form of a React/JavaScript will give you a brief overview of the things that go on under the hood when you perform these tasks.
+
+Naturally first thing you'll notice is "https" - this describes the protocol, in this case HyperText Transfer Protocol, over a secure channel. Next is the actual address (from www. to .uk), this address is used in order to find the server (host) to which you wish to talk. and finally the ending '/' - or anything after it - is used to tell that server which document you'd like. Rihards will elaborate on this.
+
+DNS Page:
+
+The first thing your browser does is send a request to a DNS server, which will translate the host name in to an IP Address which is used for routing packets. The DNS server's response contains this IP address.
+
+Address Bar:
+
+- Which your browser now uses to formulate a request packet to the server at www.google.co.uk - like a piece of mail, it has both the sender's and receiver's IP address
+- This request is received by the server which then decodes the request and responds with the appropriate data along with the HTML (Hyper Text Markup Language) data
+- Once received by your computer, this data is used to render the data sent back by the server.
+
+google.co.uk is just one example of the websites and applications the web connects you to, the whole idea (as outlined by timmy) is that it is built in a generic enough manner to allow for limitless possibilities (all of human knowledge). What started as a fairly small system has expanded rapidly to become ubiquitous, pervasive even.
+
+As countless informal sources on the internet (redditors) say: "I possess a device, in my pocket, that is capable of accessing the entirety of information known to man. I use it to look at pictures of cats and get in arguments with strangers."
+
+[https://as.reddit.com/r/AskReddit/comments/15yaap/if_someone_from_the_1950s_suddenly_appeared_today/c7qyp13/]
+
+Perhaps TBL's dream has come true. On to Rihards.
