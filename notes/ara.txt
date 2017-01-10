@@ -25,6 +25,7 @@ Address Bar:
 - Once received by your computer, this data is used to render the data sent back by the server.
 
 
+
 Google Home Page:
 
 google.co.uk is just one example of the websites and applications the web connects you to, the whole idea (as outlined by TBL) is that it is built in a generic enough manner to allow for limitless possibilities (all of human knowledge). What started as a fairly small system has expanded rapidly to become pervasive in our daily lives.
